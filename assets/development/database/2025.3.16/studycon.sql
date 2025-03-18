@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.2
+-- version 4.9.0.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Waktu pembuatan: 11 Mar 2025 pada 15.29
--- Versi server: 10.4.11-MariaDB
--- Versi PHP: 7.2.31
+-- Host: sql211.infinityfree.com
+-- Waktu pembuatan: 18 Mar 2025 pada 07.57
+-- Versi server: 10.6.19-MariaDB
+-- Versi PHP: 7.2.22
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -18,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `studycon`
+-- Database: `if0_38185876_studycon`
 --
 
 -- --------------------------------------------------------
@@ -32,14 +33,22 @@ CREATE TABLE `pengumuman` (
   `penulis` varchar(1000) NOT NULL,
   `waktu` timestamp NOT NULL DEFAULT current_timestamp(),
   `isi` varchar(5000) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
 
 --
--- Dumping data untuk tabel `pengumuman`
+-- Struktur dari tabel `request_status`
 --
 
-INSERT INTO `pengumuman` (`id`, `penulis`, `waktu`, `isi`) VALUES
-(1, 'm.rifki0729@gmail.com', '2025-03-11 14:22:49', 'Halo, ini adalah pengumuman pertama di website ini!');
+CREATE TABLE `request_status` (
+  `id` int(100) NOT NULL,
+  `id_pengguna` int(100) NOT NULL,
+  `nama_lengkap` varchar(200) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `status_req` varchar(10) NOT NULL,
+  `alasan` varchar(2000) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -51,7 +60,7 @@ CREATE TABLE `teacher_log` (
   `id` int(11) NOT NULL,
   `waktu` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `log` varchar(5000) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -69,19 +78,12 @@ CREATE TABLE `user` (
   `sekolah` varchar(1000) NOT NULL,
   `NIS` int(255) NOT NULL,
   `kelas` varchar(1000) NOT NULL,
+  `guru_tmpt_mengajar` varchar(1000) NOT NULL,
+  `guru_mapel` varchar(1000) NOT NULL,
   `status` varchar(1000) NOT NULL,
   `foto_profil` varchar(1000) NOT NULL,
   `status_akun` char(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data untuk tabel `user`
---
-
-INSERT INTO `user` (`id`, `email`, `fullname`, `username`, `password`, `tgl_lahir`, `sekolah`, `NIS`, `kelas`, `status`, `foto_profil`, `status_akun`) VALUES
-(10, 'm.rifki0729@gmail.com', 'Muhamad Rifqi Kurniawan', 'Muhamad Rifqi Kurniawan', '123', '29 Juli 2007', 'SMK Negeri 1 Cimahi', 0, 'XI SIJA A', 'master', '10_SMILE.jpg', 'active'),
-(11, 'test@test.com', 'Beta Tester', 'Beta Tester', 'test', '', '', 0, '', 'teacher', '', 'active'),
-(16, 'a@a.net', '', 'Beta_test', 'a', '', '', 0, '', 'default', '', 'active');
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -93,14 +95,7 @@ CREATE TABLE `website_log` (
   `id` int(11) NOT NULL,
   `waktu` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `log` varchar(10000) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data untuk tabel `website_log`
---
-
-INSERT INTO `website_log` (`id`, `waktu`, `log`) VALUES
-(1, '2025-03-11 14:22:49', 'Admin m.rifki0729@gmail.com telah membuat pengumuman');
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Indexes for dumped tables
@@ -110,6 +105,12 @@ INSERT INTO `website_log` (`id`, `waktu`, `log`) VALUES
 -- Indeks untuk tabel `pengumuman`
 --
 ALTER TABLE `pengumuman`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indeks untuk tabel `request_status`
+--
+ALTER TABLE `request_status`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -138,7 +139,13 @@ ALTER TABLE `website_log`
 -- AUTO_INCREMENT untuk tabel `pengumuman`
 --
 ALTER TABLE `pengumuman`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT untuk tabel `request_status`
+--
+ALTER TABLE `request_status`
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT untuk tabel `teacher_log`
@@ -150,13 +157,13 @@ ALTER TABLE `teacher_log`
 -- AUTO_INCREMENT untuk tabel `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT untuk tabel `website_log`
 --
 ALTER TABLE `website_log`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
