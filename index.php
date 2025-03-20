@@ -14,9 +14,9 @@
         <div class="header-container">
             <h1 class="inter-400 font-size-header">StudyCon | Connect with Everyone</h1>
             <div class="link">
-                <a href="" class="inter-400 font-size-xl font-style-header-link">Learn</a>
+                <a href="" class="inter-400 font-size-xl font-style-header-link">Guide</a>
                 <a href="assets/development/" class="inter-400 font-size-xl font-style-header-link">Development</a>
-                <a href="" class="inter-400 font-size-xl font-style-header-link">Kelas</a>
+                <a href="https://github.com/Smurfish-py/study-con.git" class="inter-400 font-size-xl font-style-header-link">GitHub</a>
                 <a href="login.php" class="inter-600 font-size-l font-style-header-link link-button" style="background-color: #0b0b0b; color: #f7f7f7; width: 100px; height: 40px;">LOGIN</a>
             </div>
         </div>
