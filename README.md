@@ -56,8 +56,4 @@ Berikut adalah tabel perbandingan privilege untuk setiap status akun :
 |**Hapus materi/tugas**|tidak|`ya`|`ya`|
 
 ## Catatan :
-<<<<<<< HEAD
 Beberapa fitur akan ditambahkan di masa mendatang. Semua fitur yang sudah ada merupakan fitur sementara dan mungkin akan diubah atau direvisi kedepannya.
-=======
-Beberapa fitur akan ditambahkan di masa mendatang. Semua fitur yang sudah ada merupakan fitur sementara dan mungkin akan diubah atau direvisi kedepannya.
->>>>>>> 58154447b8f7157b4c464e2fbe348a2894e3a910
