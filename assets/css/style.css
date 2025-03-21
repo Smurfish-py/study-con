@@ -208,11 +208,21 @@ body {
 .submit-kelas {
     color: white;
     display: inline-block;
-    height: 35px;
     font-size: 18px;
     background-color: black;
     border: none;
     border-radius: 7px;
+    height: 35px;
+}
+
+.deskripsi-kelas {
+    display: inline-block;
+    padding: 10px;
+}
+
+.submit-kelas:hover{
+    cursor: pointer;
+    opacity: 90%;
 }
 
 .profile-body {
@@ -555,7 +565,7 @@ input[type="file"] {
     width: 150px;
 }
 
-input:focus {
+.input-text:focus {
     outline: none;
     border-bottom: solid 3px;
 }
