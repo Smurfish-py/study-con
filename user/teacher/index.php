@@ -78,7 +78,7 @@ if (!isset($_SESSION['id'])) {
             <div class="options-section">
                 <div class="options" style="margin-right: 10px;">
                     <div class="sub-options inter-600">
-                        <a href="buat-kelas.php"><i class="fa-solid fa-chalkboard-user fa-xl"></i> <span style="margin-left: 20px;">Buat Kelas</span></a>
+                        <a href="buat_kelas.php"><i class="fa-solid fa-chalkboard-user fa-xl"></i> <span style="margin-left: 20px;">Buat Kelas</span></a>
                     </div>
                     <div class="sub-options inter-600">
                         <a href=""><i class="fa-solid fa-gear fa-xl"></i> <span style="margin-left: 28px;">Kelola Kelas</span></a>
