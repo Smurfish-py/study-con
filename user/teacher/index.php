@@ -73,7 +73,7 @@ if (!isset($_SESSION['id'])) {
         </div>
     </div>
     <main class="inter-400" style="display: flex; align-items: center; justify-content: center;">
-        <!--Main Content (Say no to chatGPT-->
+        <!--Main Content (Say no to chatGPT)-->
         <div class="main-content">
             <div class="options-section">
                 <div class="options" style="margin-right: 10px;">
@@ -82,6 +82,19 @@ if (!isset($_SESSION['id'])) {
                     </div>
                     <div class="sub-options inter-600">
                         <a href=""><i class="fa-solid fa-gear fa-xl"></i> <span style="margin-left: 28px;">Kelola Kelas</span></a>
+                    </div>
+                </div>
+                <div class="options" style="width: 390px; margin-top: 10px;">
+                    <div class="pengumuman">
+                        <div>
+                            <h3>Notifikasi</h3>
+                        </div>
+                        <hr>
+                        <div class="isi-pengumuman">
+                            <?php
+                            
+                            ?>
+                        </div>
                     </div>
                 </div>
                 <div class="options">
@@ -101,19 +114,6 @@ if (!isset($_SESSION['id'])) {
                             } else {
                                 echo "Belum ada pengumuman :D";
                             }
-                            ?>
-                        </div>
-                    </div>
-                </div>
-                <div class="options" style="width: 390px; margin-top: 10px;">
-                    <div class="pengumuman">
-                        <div>
-                            <h3>Notifikasi</h3>
-                        </div>
-                        <hr>
-                        <div class="isi-pengumuman">
-                            <?php
-                            
                             ?>
                         </div>
                     </div>
