@@ -134,7 +134,7 @@ if (!isset($_SESSION['id'])) {
                                 echo "<a href='kelas.php?id=".$row['id']."' style='border-radius: 8px'>";
                                 echo "<div style='display: flex; align-items: center; height: 100px; position: relative; border-radius: 8px'>";
                                 if (file_exists($path.$row['gambar_header_kelas']) == false || $row['gambar_header_kelas'] == '') {
-                                    echo "<img src='".$path."default.jpg' style='width: 100%; object-fit: cover; height: 100px; filter: brightness(70%); border-radius: 8px'>";
+                                    echo "<img src='".$path."default.jpg' style='width: 100%; object-fit: cover; height: 100px; filter: brightness(50%); border-radius: 8px'>";
                                 } else {
                                     echo "<img src='".$path.$row['gambar_header_kelas']."' style='width: 100%; object-fit: cover; height: 100px; filter: brightness(50%); border-radius: 8px'>";
                                 }
