@@ -124,8 +124,28 @@ if (!isset($_SESSION['id'])) {
                 <div class="log-side" style="width: 1258px; border-radius: 18px;">
                     <h2>Kelas Anda</h2>
                     <hr>
-                    <div style="overflow-y: auto; height: 190px; margin: 10px 30px 0 50px;">
-                        
+                    <div style="overflow-y: auto; height: fit-content; margin: 10px 50px 30px 50px;">
+                        <?php
+                        $stmt = $pdo->prepare("SELECT * FROM kelas WHERE id_guru=:id_guru");
+                        $stmt->execute(['id_guru'=>$_SESSION['id']]);
+                        $path = "../../assets/images/kelas/";
+                        if ($stmt->rowCount()>0) {
+                            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+                                echo "<a href='' style='border-radius: 8px'>";
+                                echo "<div style='display: flex; align-items: center; height: 100px; position: relative; border-radius: 8px'>";
+                                if (file_exists($path.$row['gambar_header_kelas']) == false || $row['gambar_header_kelas'] == '') {
+                                    echo "<img src='".$path."default.jpg' style='width: 100%; object-fit: cover; height: 100px; filter: brightness(70%); border-radius: 8px'>";
+                                } else {
+                                    echo "<img src='".$path.$row['gambar_header_kelas']."' style='width: 100%; object-fit: cover; height: 100px; filter: brightness(50%); border-radius: 8px'>";
+                                }
+                                
+                                echo "<h3 class='inter-500' style='margin-left: 30px; position: absolute; top: 0; color: white; '>".$row['nama_kelas']."<br><span class='inter-300'>ID Kelas : ".$row['id']."</span></h3>";
+                                echo "</div>";
+                                echo "</a>";
+                                echo "<hr style='margin: 5px;'>";
+                            }
+                        }
+                        ?>
                     </div>
                 </div>
             </div>
