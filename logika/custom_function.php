@@ -15,6 +15,14 @@ function ubahStatus_log($pelaku, $diubah, $status){
     $stmt->execute([':log' => $log_message]);
 }
 
+function buatKelas_log($pelaku, $id_kelas){
+    include "koneksi.php";
+    $query = "INSERT INTO website_log (log) VALUES (:log)";
+    $stmt = $pdo->prepare($query);
+    $log_message = htmlspecialchars("$pelaku telah membuat kelas dengan id: $id_kelas", ENT_QUOTES, 'UTF-8');
+    $stmt->execute([':log' => $log_message]);
+}
+
 function generateIdKelas($pdo) {
     do {
         $randomNumber = random_int(1000, 99999);
