@@ -131,7 +131,7 @@ if (!isset($_SESSION['id'])) {
                         $path = "../../assets/images/kelas/";
                         if ($stmt->rowCount()>0) {
                             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-                                echo "<a href='' style='border-radius: 8px'>";
+                                echo "<a href='kelas.php?id=".$row['id']."' style='border-radius: 8px'>";
                                 echo "<div style='display: flex; align-items: center; height: 100px; position: relative; border-radius: 8px'>";
                                 if (file_exists($path.$row['gambar_header_kelas']) == false || $row['gambar_header_kelas'] == '') {
                                     echo "<img src='".$path."default.jpg' style='width: 100%; object-fit: cover; height: 100px; filter: brightness(70%); border-radius: 8px'>";
@@ -144,6 +144,8 @@ if (!isset($_SESSION['id'])) {
                                 echo "</a>";
                                 echo "<hr style='margin: 5px;'>";
                             }
+                        } else {
+                            echo "<p>Belum ada kelas :(<br> Buat kelas dan terhubung dengan murid Anda di mana saja dan kapan saja!</p>";
                         }
                         ?>
                     </div>
