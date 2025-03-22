@@ -72,7 +72,7 @@ if (!isset($_SESSION['id'])) {
             <a href="../../logika/logout.php" class='font-size-md' style='text-decoration: none; color: #C00F0C;'>Logout from this device</a>
         </div>
     </div>
-    <main class="inter-400">
+    <main class="inter-400" style="padding-top: 90px;">
         <div class="buat-kelas-container">
             <div class="left-side" style="display: flex; align-items: center; height: 80vh; flex: 1;">
                 <h1 class="inter-600" style="margin: 0 0 0 100px;">Buat kelas,<br>dan terhubung<br>dengan murid anda!</h1>

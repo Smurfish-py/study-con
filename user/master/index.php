@@ -89,7 +89,7 @@ if (!isset($_SESSION['id'])) {
             
          </div>
     </div>
-    <main class="inter-400" style="display: flex; align-items: center; justify-content: center;">
+    <main class="inter-400" style="display: flex; align-items: center; justify-content: center; padding-top: 0px;">
         <!--Main Content (Say no to chatGPT-->
         <div class="main-content">
             <div class="options-section">

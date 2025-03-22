@@ -72,7 +72,7 @@ if (!isset($_SESSION['id'])) {
             <a href="../../logika/logout.php" class='font-size-md' style='text-decoration: none; color: #C00F0C;'>Logout from this device</a>
         </div>
     </div>
-    <main class="inter-400" style="display: flex; align-items: center; justify-content: center;">
+    <main class="inter-400" style="display: flex; align-items: center; justify-content: center; padding-top: 70px;">
         <!--Main Content (Say no to chatGPT)-->
         <div class="main-content">
             <div class="options-section">
