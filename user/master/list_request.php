@@ -128,7 +128,6 @@ if (!isset($_SESSION['id'])) {
             </div>
             <?php
             } 
-
             ?>
         </div>
     </div>
