@@ -225,6 +225,28 @@ body {
     opacity: 90%;
 }
 
+.class-container {
+    display: flex;
+    background-color: white;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    border-radius: 18px;
+    height: 80vh;
+    width: 100vw;   
+}
+
+.class-header {
+    position: relative;
+}
+
+.class-header::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 18px 18px 0 0;
+}
+
 .profile-body {
     display: flex;
     align-items: center;
