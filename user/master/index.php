@@ -89,7 +89,7 @@ if (!isset($_SESSION['id'])) {
             
          </div>
     </div>
-    <main class="inter-400" style="display: flex; align-items: center; justify-content: center; padding-top: 0px;">
+    <main class="inter-400" style="display: flex; align-items: center; justify-content: center; padding-top: 90px;">
         <!--Main Content (Say no to chatGPT-->
         <div class="main-content">
             <div class="options-section">
@@ -109,7 +109,7 @@ if (!isset($_SESSION['id'])) {
                         <a href="" style="background-color: #FEE9E7; color: #EC221F; border-color:rgb(236, 34, 31, 0.3);"><i class="fa-solid fa-user-xmark fa-xl"></i> <span style="margin-left: 20px;">Ban Pengguna</span></a>
                     </div>
                 </div>
-                <div class="options" style="width: 373px; margin-top: 10px;">
+                <div class="options" style="width: 370px; margin-top: 10px;">
                     <div class="pengumuman">
                         <div>
                             <h3>Pengumuman</h3>
@@ -141,7 +141,7 @@ if (!isset($_SESSION['id'])) {
                 <div class="log-side">
                     <h2>Website Log</h2>
                     <hr>
-                    <div style="overflow-y: auto; height: 190px; margin: 10px 30px 0 50px;">
+                    <div style="overflow-y: auto; height: 228px; margin: 10px 30px 0 50px;">
                         <?php
                         $query = "SELECT * FROM website_log ORDER BY id DESC";
                         $hasil = $pdo->query($query);
