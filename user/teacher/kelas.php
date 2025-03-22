@@ -3,6 +3,15 @@ session_start();
 
 include "../logika/koneksi.php";
 
+if (!isset($_SESSION['id'])) {
+    session_destroy();
+    header("Location: ../../login.php");
+    exit();
+} else if ($_SESSION['status'] != 'teacher' || $_SESSION['status-akun'] == 'banned') {
+    session_destroy();
+    header("Location: ../../");
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -72,7 +81,7 @@ include "../logika/koneksi.php";
             </div>
             <div class="class-body">
                 <div class="anggota-kelas">
-
+                    
                 </div>
                 <div class="tugas-materi">
 
