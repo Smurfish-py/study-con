@@ -131,6 +131,25 @@ if (!isset($_SESSION['id'])) {
                                </div>
                             </div>
                             <hr>
+                            <?php
+                            $stmt = $pdo->prepare("SELECT * FROM guru_tugas WHERE id_kelas=:id_kelas AND id_guru=:id_guru");
+                            $stmt->execute(['id_kelas'=>$idKelas, 'id_guru'=>$_SESSION['id']]);
+                            
+                            if ($stmt->rowCount()>0) {
+                                echo "<hr style='margin-top: 30px;''>";
+                                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                                    if ($row['tipe'] == 'tugas') {
+                                        echo "<h2 class='inter-400 font-size-xl' style='margin: 0 0 0 40px;'><a href='' style='color: black; text-decoration: none;'><span style='margin-right: 20px;'><i class='fa-solid fa-file-signature fa-xl'></i></span>".$row['judul']."</a></h2>";
+                                        echo "<hr>";
+                                    } else if  ($row['tipe'] == 'materi') {
+                                        echo "<h2 class='inter-400 font-size-xl' style='margin: 0 0 0 40px; color: black; font-decoration: none;'><a href='' style='color: black; text-decoration: none;'><span style='margin-right: 23px;'><i class='fa-solid fa-pen-ruler fa-xl'></i></span>".$row['judul']."</a></h2>";
+                                        echo "<hr>";
+                                    }
+                                }   
+                            } else {
+                                echo "<p class='inter-400'>Anda belum membuat kelas :(<p>";
+                            }
+                            ?>
                         </div>
                         <div class="tugas-body" id="anggota-kelas" style="display: none;">
                             <h2 class="inter-500" style="margin: 0;">Anggota Kelas</h2>
