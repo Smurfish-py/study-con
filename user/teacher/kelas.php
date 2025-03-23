@@ -75,7 +75,7 @@ if (!isset($_SESSION['id'])) {
         </div>
     </div>
     <main style="display: flex; align-items: center; justify-content: center; padding-top: 105px; flex: 1;">
-        <div class="class-container">
+        <div class="class-container" style="display: flex; flex-direction: column;">
             <?php
             if (isset($_GET['id'])) {
                 $idKelas = $_GET['id'];
@@ -97,23 +97,51 @@ if (!isset($_SESSION['id'])) {
                 echo "<h1 class='inter-600' style='position: absolute; margin-left: 50px; color: white;'>".$row['nama_kelas']."<br><span class='inter-400' style='font-size: 20px; margin: 0;'>".$new_row['email']." (".$new_row['fullname'].")</span></h1>";
                 echo "</div>";
                 echo "<div style='height: 100%; flex: 1; display: flex; align-items: center; justify-content: right;'>";
-                echo "<a class='inter-400' href='index.php' style='color: white; position: absolute; text-decoration: none; margin-right: 50px;'>Kembali ke dashboard</a>";
+                echo "<p class='inter-400' style='color: white; position: absolute; text-decoration: none; margin-right: 50px;'>".$new_row['email']."</p>";
                 echo "</div>";
                 echo "</div>";
             }
 
             
             ?>
-            <div class="class-body">
-                <div class="anggota-kelas">
-                    
-                </div>
-                <div class="tugas-materi">
-
+            <div class="class-body" style="display: flex; flex: 1; width: 100%; height: 100%; justify-content: center;">
+                <div class="pilihan-container" style="display: flex; gap: 15px; border: none;">
+                    <div class="pilihan-container" style="margin: 0; flex: 0.7;">
+                        <div class="tugas-body">
+                            <h2 class="inter-500" style="margin: 0;">Menu</h2>
+                            <hr style="border: 1px solid;">
+                            <hr style="margin-top: 30px;">
+                            <h2 class="inter-400 font-size-xl" style="margin: 10px 0;"><span style="margin: 0 20px 0 50px;"><i class="fa-solid fa-book-open"></i></span><a href="" style="text-decoration: none; color: black;">Tugas dan Materi</a></h2>
+                            <hr>
+                            <h2 class="inter-400 font-size-xl" style="margin: 10px 0;"><span style="margin: 0 20px 0 50px;"><i class="fa-solid fa-users"></i></span><a href="" style="text-decoration: none; color: black;">Anggota Kelas</a></h2>
+                            <hr>
+                            <h2 class="inter-400 font-size-xl" style="margin: 10px 0;"><span style="margin: 0 27px 0 50px;"><i class="fa-solid fa-check"></i></span><a href="" style="text-decoration: none; color: black;">Rekap Nilai</a></h2>
+                            <hr>
+                            <h2 class="inter-400 font-size-xl" style="margin: 10px 0;"><span style="margin: 0 20px 0 50px;"><i class="fa-solid fa-home"></i></span><a href="index.php" style="text-decoration: none; color: black;">Kembali ke Dashboard</a></h2>
+                            <hr>
+                        </div>
+                    </div>
+                    <div class="pilihan-container" style="margin: 0; flex: 1.3;">
+                        <div class="tugas-body" id="tugas-dan-materi">
+                            <div style="display: flex; align-items: center; justify-content: space-between;">
+                               <h2 class="inter-500" style="margin: 0;">Tugas dan Materi</h2>
+                               <div style="display: flex; align-items: center; justify-content: space-between; width: 70px;">
+                                <a href="" style="color: black;"><i class="fa-solid fa-plus fa-xl"></i></a>
+                                <a href="" style="color: black;"><i class="fa-solid fa-gear fa-xl"></i></a>
+                               </div>
+                            </div>
+                            
+                            <hr>
+                        </div>
+                        <div class="tugas-body" id="anggota-kelas" style="display: none;">
+                            <h2 class="inter-500">Tugas dan Materi</h2>
+                            <hr>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </main>
-    <script src="../../assets/javascript/scripts.js"></script>
+    <script src=".p./assets/javascript/scripts.js"></script>
 </body>
 </html>
