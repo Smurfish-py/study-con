@@ -34,4 +34,12 @@ function generateIdKelas($pdo) {
 
     return $randomNumber;
 }
+
+function buatTugas_log($pelaku, $id_kelas, $judul_subjek){
+    include "koneksi.php";
+    $query = "INSERT INTO website_log (log) VALUES (:log)";
+    $stmt = $pdo->prepare($query);
+    $log_message = htmlspecialchars("$pelaku telah membuat subjek baru dengan judul $judul_subjek di id kelas : $id_kelas", ENT_QUOTES, 'UTF-8');
+    $stmt->execute([':log' => $log_message]);
+}
 ?>
