@@ -111,9 +111,9 @@ if (!isset($_SESSION['id'])) {
                             <h2 class="inter-500" style="margin: 0;">Menu</h2>
                             <hr style="border: 1px solid;">
                             <hr style="margin-top: 30px;">
-                            <h2 class="inter-400 font-size-xl" style="margin: 10px 0;"><span style="margin: 0 20px 0 50px;"><i class="fa-solid fa-book-open"></i></span><a href="" style="text-decoration: none; color: black;">Tugas dan Materi</a></h2>
+                            <h2 class="inter-400 font-size-xl" style="margin: 10px 0;"><span style="margin: 0 20px 0 50px;"><i class="fa-solid fa-book-open"></i></span><a href="kelas.php?id=<?php echo $idKelas?>" style="text-decoration: none; color: black;">Tugas dan Materi</a></h2>
                             <hr>
-                            <h2 class="inter-400 font-size-xl" style="margin: 10px 0;"><span style="margin: 0 20px 0 50px;"><i class="fa-solid fa-users"></i></span><a href="" style="text-decoration: none; color: black;">Anggota Kelas</a></h2>
+                            <h2 class="inter-400 font-size-xl" style="margin: 10px 0;"><span style="margin: 0 20px 0 50px;"><i class="fa-solid fa-users"></i></span><a href="kelas.php?action=anggota-kelas&id=<?php echo $idKelas?>" style="text-decoration: none; color: black;">Anggota Kelas</a></h2>
                             <hr>
                             <h2 class="inter-400 font-size-xl" style="margin: 10px 0;"><span style="margin: 0 27px 0 50px;"><i class="fa-solid fa-check"></i></span><a href="" style="text-decoration: none; color: black;">Rekap Nilai</a></h2>
                             <hr>
@@ -126,15 +126,14 @@ if (!isset($_SESSION['id'])) {
                             <div style="display: flex; align-items: center; justify-content: space-between;">
                                <h2 class="inter-500" style="margin: 0;">Tugas dan Materi</h2>
                                <div style="display: flex; align-items: center; justify-content: space-between; width: 70px;">
-                                <a href="" style="color: black;"><i class="fa-solid fa-plus fa-xl"></i></a>
-                                <a href="" style="color: black;"><i class="fa-solid fa-gear fa-xl"></i></a>
+                                    <a href="buat_tugas.php?id=<?php echo $idKelas?>" style="color: black;"><i class="fa-solid fa-plus fa-xl"></i></a>
+                                    <a href="" style="color: black;"><i class="fa-solid fa-gear fa-xl"></i></a>
                                </div>
                             </div>
-                            
                             <hr>
                         </div>
                         <div class="tugas-body" id="anggota-kelas" style="display: none;">
-                            <h2 class="inter-500">Tugas dan Materi</h2>
+                            <h2 class="inter-500" style="margin: 0;">Anggota Kelas</h2>
                             <hr>
                         </div>
                     </div>
@@ -142,6 +141,27 @@ if (!isset($_SESSION['id'])) {
             </div>
         </div>
     </main>
+    <?php
+    if (isset($_GET['action'])) {
+        if ($_GET['action'] == 'anggota-kelas') {
+        ?>
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                const tugasMateri = document.getElementById("tugas-dan-materi");
+                const anggotaKelas = document.getElementById("anggota-kelas");
+
+                if (tugasMateri.style.display != 'none') {
+                    tugasMateri.style.display = 'none';
+                    anggotaKelas.style.display = 'block';
+                } else {
+                    anggotaKelas.style.display = 'block';
+                }
+            });
+        </script>
+        <?php
+        }
+    }
+    ?>
     <script src=".p./assets/javascript/scripts.js"></script>
 </body>
 </html>
