@@ -72,6 +72,21 @@ if (!isset($_SESSION['id'])) {
             <a href="../../logika/logout.php" class='font-size-md' style='text-decoration: none; color: #C00F0C;'>Logout from this device</a>
         </div>
     </div>
+    <main class="inter-400" style="display: flex; align-items: center; justify-content: center; padding-top: 90px;">
+        <div class="main-content" style="width: 100%;">
+            <div style="width: 100%; display: flex; justify-content: space-between; align-items: center;">
+                <h2>Joined Class</h2>
+                <form action="../../logika/join_kelas_logic.php?action=join" method="post">
+                    <span>
+                        <label class="inter-600 font-size-l" for="join-kelas">Join ke kelas</label> <br>
+                        <input class="inter-400 input-kelas font-size-l" type="number" style="width: 300px; height: 35px; border-right: 1px solid rgba(0, 0, 0, 0.4);" placeholder="Masukan kode kelas, contoh: 12345" id="join-kelas" name="join-kelas">
+                    </span>
+                    <button type="submit" style=" color: rgba(0, 0, 0, 0.6); height: 40px; width: 40px; background-color: #45474B; border-radius: 7px; color: white;"><i class="fa-solid fa-arrow-right-to-bracket fa-xl"></i></button>
+                </form>
+            </div>
+            <hr>
+        </div>
+    </main>
     <script src="../../assets/javascript/scripts.js"></script>
 </body>
 </html>
