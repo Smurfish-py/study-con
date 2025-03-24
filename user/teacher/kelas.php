@@ -147,7 +147,7 @@ if (!isset($_SESSION['id'])) {
                                     }
                                 }   
                             } else {
-                                echo "<p class='inter-400'>Anda belum membuat kelas :(<p>";
+                                echo "<p class='inter-400'>Anda belum membuat materi :(<p>";
                             }
                             ?>
                         </div>
