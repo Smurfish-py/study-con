@@ -85,6 +85,43 @@ if (!isset($_SESSION['id'])) {
                 </form>
             </div>
             <hr>
+            <div class="class-list">
+            <?php
+            try {
+                $stmt = $pdo->prepare("SELECT * FROM kelas JOIN anggota_kelas ON kelas.id = anggota_kelas.id_kelas WHERE anggota_kelas.id_murid = :id");
+                $stmt->execute(['id'=>$_SESSION['id']]);
+                if ($stmt->rowCount()>0) {
+                    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                        ?>
+                        <a class="class-list-header" style="position: relative; display: inline-block; background-color: white; height: 350px; width: 300px; border: 1px solid rgba(0, 0, 0, 0.4); border-radius: 13px; background-image: url(../../assets/images/kelas/<?php 
+                        if ($row['gambar_header_kelas'] == '') {
+                            echo "default.jpg";
+                        } else {
+                            echo $row['gambar_header_kelas'];
+                        }
+    
+                        ?>); background-repeat: no-repeat; background-size: cover; background-position: center;">
+                            <div style="height: 95%; width: 85%; display: flex; justify-content: end; margin: 0 15px; overflow-y: auto; position: absolute; flex-direction: column;">
+                                <h2 class="inter-600 font-size-xl" style="color: white;"><?php echo $row['nama_kelas']?></h2>
+                                <p style="color: white;"><?php echo $row['deskripsi_kelas']?></p>
+                            </div>
+                            
+                        </a>
+                        <?php
+                    }
+                } else {
+                    echo "Anda belum mengikuti kelas manapun :( <br> Minta pengajar anda untuk membagikan id kelas beserta passwordnya (Jika ada), kemudian bergabung ke kelas untuk terhubung dimana saja dan kapan saja :D";
+                }
+            } catch (PDOException $e) {
+                echo $e->getMessage();
+            } finally {
+                $pdo = null;
+            }
+            
+            ?>
+            </div>
+            <hr>
+
         </div>
     </main>
     <script src="../../assets/javascript/scripts.js"></script>
