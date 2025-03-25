@@ -156,7 +156,7 @@ if (!isset($_SESSION['id'])) {
                     </div>
                 </div>
                 <div class="gray-side">
-                    <h2 class="inter-400">Ver. 6:14.16.03.2025 <br> Tahap : Pre-alphaV4 <br><br> <a href="../../assets/development/" style="text-decoration: none; color: white;" class="font-size-xl"><i class="fa-solid fa-code"></i> Development Log</a></h2>
+                    <h2 class="inter-400">Ver. 12:51.25.03.2025 <br> Tahap : Pre-alphaV4 <br><br> <a href="../../assets/development/" style="text-decoration: none; color: white;" class="font-size-xl"><i class="fa-solid fa-code"></i> Development Log</a></h2>
                     
                 </div>
             </div>
