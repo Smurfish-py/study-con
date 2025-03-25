@@ -31,7 +31,12 @@ if (isset($_POST)) {
     if ($total_file > 0) {
         for ($i = 0; $i < $total_file; $i++) {
             $nama_file = $_FILES['file-subjek']['name'][$i];
-            $nama_file_baru = $idKelas."_".$id."_".$nama_file;
+            if (!empty($_FILES['file-subjek']['name'][$i])) {
+                $nama_file_baru = $idKelas."_".$id."_".$nama_file;
+            } else {
+                $nama_file_baru = '';
+            }
+            
             $file_tmp = $_FILES['file-subjek']['tmp_name'][$i];
             
             $stmt = $pdo->prepare("INSERT INTO file_tugas_guru (id, id_kelas, id_guru, nama_file) VALUES (:id, :id_kelas, :id_guru, :nama_file)");
