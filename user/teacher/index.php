@@ -92,7 +92,16 @@ if (!isset($_SESSION['id'])) {
                         <hr>
                         <div class="isi-pengumuman">
                             <?php
+                            $stmt = $pdo->prepare("SELECT * FROM teacher_log WHERE id_guru = :id ORDER BY id DESC");
+                            $stmt->execute([':id'=>$_SESSION['id']]);
                             
+                            if ($stmt->rowCount()>0) {
+                                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                                    echo "<p style='margin: 0;'><span style='color: #009DFF;'>[".$row['waktu']."]</span> ".$row['log']."</p>";
+                                }
+                            } else {
+                                echo "Belum ada kegiatan :)";
+                            }
                             ?>
                         </div>
                     </div>
