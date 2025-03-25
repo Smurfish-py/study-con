@@ -97,12 +97,11 @@ if (!isset($_SESSION['id'])) {
                 echo "<h1 class='inter-600' style='position: absolute; margin-left: 50px; color: white;'>".$row['nama_kelas']."<br><span class='inter-400' style='font-size: 20px; margin: 0;'>".$new_row['email']." (".$new_row['fullname'].")</span></h1>";
                 echo "</div>";
                 echo "<div style='height: 100%; flex: 1; display: flex; align-items: center; justify-content: right;'>";
-                echo "<p class='inter-400' style='color: white; position: absolute; text-decoration: none; margin-right: 50px;'>".$new_row['email']."</p>";
+                echo "<p class='inter-400 font-size-xl' style='color: white; position: absolute; text-decoration: none; margin-right: 50px;'>ID Kelas : ".$row['id']."</p>";
                 echo "</div>";
                 echo "</div>";
             }
 
-            
             ?>
             <div class="class-body" style="display: flex; flex: 1; width: 100%; height: 100%; justify-content: center;">
                 <div class="pilihan-container" style="display: flex; gap: 15px; border: none;">
