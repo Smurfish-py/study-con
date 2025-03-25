@@ -42,4 +42,20 @@ function buatTugas_log($pelaku, $id_kelas, $judul_subjek){
     $log_message = htmlspecialchars("$pelaku telah membuat subjek baru dengan judul $judul_subjek di id kelas : $id_kelas", ENT_QUOTES, 'UTF-8');
     $stmt->execute([':log' => $log_message]);
 }
+
+function joinKelas_log($pelaku, $id_kelas){
+    include "koneksi.php";
+    $query = "INSERT INTO website_log (log) VALUES (:log)";
+    $stmt = $pdo->prepare($query);
+    $log_message = htmlspecialchars("$pelaku bergabung kedalam kelas dengan id kelas : $id_kelas", ENT_QUOTES, 'UTF-8');
+    $stmt->execute([':log' => $log_message]);
+}
+
+function joinKelas_logGuru($pelaku, $id_kelas, $id_guru){
+    include "koneksi.php";
+    $query = "INSERT INTO teacher_log (id_guru, log) VALUES (:id, :log)";
+    $stmt = $pdo->prepare($query);
+    $log_message = htmlspecialchars("$pelaku bergabung kedalam kelas anda, id kelas : $id_kelas", ENT_QUOTES, 'UTF-8');
+    $stmt->execute([':id'=>$id_guru,':log' => $log_message]);
+}
 ?>
