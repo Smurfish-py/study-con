@@ -7,9 +7,6 @@ if (!isset($_SESSION['id'])) {
     session_destroy();
     header("Location: ../../login.php");
     exit();
-} else if ($_SESSION['status'] != 'teacher' || $_SESSION['status-akun'] == 'banned') {
-    session_destroy();
-    header("Location: ../../");
 }
 
 ?>
@@ -94,7 +91,13 @@ if (!isset($_SESSION['id'])) {
                 }
                 echo "<div class='class-header' style='display: flex; align-items: center; justify-content: space-between; background-image: url(\"../../assets/images/kelas/".$gambarHeader."\"); height: 160px; width: 100%; border-radius: 18px 18px 0 0; position: relative; background-repeat: no-repeat; background-size: cover; background-position: center;'>";
                 echo "<div style='display: flex;align-items: center; height: 100%; flex: 1;'>";
-                echo "<h1 class='inter-600' style='position: absolute; margin-left: 50px; color: white;'>".$row['nama_kelas']."<br><span class='inter-400' style='font-size: 20px; margin: 0;'>".$new_row['email']." (".$new_row['fullname'].")</span></h1>";
+
+                if ($new_row['fullname'] == '') {
+                    $teacher_fullname = '';
+                } else {
+                    $teacher_fullname = "(".$row['fullname'].")";
+                }
+                echo "<h1 class='inter-600' style='position: absolute; margin-left: 50px; color: white;'>".$row['nama_kelas']."<br><span class='inter-400' style='font-size: 20px; margin: 0;'>".$new_row['email']." ".$teacher_fullname."</span></h1>";
                 echo "</div>";
                 echo "<div style='height: 100%; flex: 1; display: flex; align-items: center; justify-content: right;'>";
                 echo "<a class='inter-400' href='index.php' style='color: white; position: absolute; text-decoration: none; margin-right: 50px;'>Kembali ke dashboard</a>";
@@ -107,28 +110,67 @@ if (!isset($_SESSION['id'])) {
             <div class="class-body" style="display: flex; flex: 1; width: 100%; height: 100%; justify-content: center;">
                 <div class="pilihan-container" style="display: flex; gap: 15px; border: none;">
                     <div class="pilihan-container" style="margin: 0; flex: 0.7;">
+                        <div class="tugas-body" id="tugas-dan-materi">
+                            <h2 class="inter-500" style="margin: 0;">Anggota Kelas</h2>
+                            <hr style="border: 1px solid;">
+                            <hr>
+                            <?php
+                            try {
+                                $stmt = $pdo->prepare("SELECT * FROM user JOIN anggota_kelas ON user.id = anggota_kelas.id_murid WHERE anggota_kelas.id_kelas = :id ORDER BY username ASC");
+                                $stmt->execute([':id'=>$idKelas]);
 
+                                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                                    echo "<div class='inter-400 anggota-kelas' style='height: 40px;'>";
+                                    if ($row['foto_profil'] == '') {
+                                        echo "<span style='font-size: 30px;'><i class='fa-solid fa-circle-user'></i></span>";
+                                    } else {
+                                        echo "<img src='../../assets/images/user/".$row['foto_profil']."' alt='Foto Profil User' style='height: 30px; width: 30px; object-fit: cover; border-radius: 100px;'>";;
+                                    }
+                                    echo "<h2 class='inter-400 font-size-l'>".$row['username']."<br><span class='font-size-md'>".$row['email']."</span><h2>";
+                                    echo "</div>";
+                                    echo "<hr style='margin: 10px 0;'>";
+                                }  
+                            } catch (PDOException $e) {
+                                echo $e->getMessage();
+                            }
+                            
+                            ?>
+                        </div>
                     </div>
                     <div class="pilihan-container" style="margin: 0; flex: 1.3;">
                         <div class="tugas-body" id="tugas-dan-materi">
-                            <h2 class="inter-500">Tugas dan Materi</h2>
+                            <h2 class="inter-500" style="margin: 0;">Tugas dan Materi</h2>
                             <hr>
-                        </div>
-                        <div class="tugas-body" id="anggota-kelas" style="display: none;">
-                            <h2 class="inter-500">Tugas dan Materi</h2>
-                            <hr>
-                        </div>
-                        <div class="tugas-body" id="anggota-kelas" style="display: none;">
-                            <h2 class="inter-500">Tugas dan Materi</h2>
-                            <hr>
-                        </div>
-                        <div class="tugas-body" id="kembali-dashboard" style="display: none;">
-                            <h2 class="inter-500">Tugas dan Materi</h2>
-                            <hr>
+                            <?php
+                            $stmt = $pdo->prepare("SELECT * FROM guru_tugas WHERE id_kelas=:id_kelas");
+                            $stmt->execute(['id_kelas'=>$idKelas]);
+                            
+                            if ($stmt->rowCount()>0) {
+                                echo "<hr style=''>";
+                                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                                    ?>
+                                    <a href="" class="inter-400 tugas">
+                                        <div class="link-tugas">
+                                    <?php
+                                    if ($row['tipe'] == 'tugas') {
+                                        echo "<i class='fa-solid fa-flask fa-2xl'></i>";
+                                    } else if  ($row['tipe'] == 'materi') {
+                                        echo "<i class='fa-solid fa-bookmark fa-2xl'></i>";
+                                    }
+                                    ?>
+                                    <h2 class="font-size-l"><?php echo $row['judul']?><br><span class="inter-300">Diunggah pada <?php echo $row['waktu']?></span></h2>
+	                                    </div>
+                                    </a>
+                                    <hr>
+                                    <?php
+                                }   
+                            } else {
+                                echo "<p class='inter-400'>Belum ada tugas ataupun materi :)<p>";
+                            }
+                            ?>
                         </div>
                     </div>
                 </div>
-                
             </div>
         </div>
     </main>
