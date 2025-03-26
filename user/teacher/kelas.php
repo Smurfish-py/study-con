@@ -129,21 +129,29 @@ if (!isset($_SESSION['id'])) {
                                     <a href="" style="color: black;"><i class="fa-solid fa-gear fa-xl"></i></a>
                                </div>
                             </div>
-                            <hr>
+                            <hr style="border: 1px solid rgba(0, 0, 0, 1);">
                             <?php
                             $stmt = $pdo->prepare("SELECT * FROM guru_tugas WHERE id_kelas=:id_kelas AND id_guru=:id_guru");
                             $stmt->execute(['id_kelas'=>$idKelas, 'id_guru'=>$_SESSION['id']]);
                             
                             if ($stmt->rowCount()>0) {
-                                echo "<hr style='margin-top: 30px;''>";
+                                echo "<hr style=''>";
                                 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                                    ?>
+                                    <a href="" class="inter-400 tugas">
+                                        <div class="link-tugas">
+                                    <?php
                                     if ($row['tipe'] == 'tugas') {
-                                        echo "<h2 class='inter-400 font-size-xl' style='margin: 0 0 0 40px;'><a href='' style='color: black; text-decoration: none;'><span style='margin-right: 20px;'><i class='fa-solid fa-file-signature fa-xl'></i></span>".$row['judul']."</a></h2>";
-                                        echo "<hr>";
+                                        echo "<i class='fa-solid fa-flask fa-2xl'></i>";
                                     } else if  ($row['tipe'] == 'materi') {
-                                        echo "<h2 class='inter-400 font-size-xl' style='margin: 0 0 0 40px; color: black; font-decoration: none;'><a href='' style='color: black; text-decoration: none;'><span style='margin-right: 23px;'><i class='fa-solid fa-pen-ruler fa-xl'></i></span>".$row['judul']."</a></h2>";
-                                        echo "<hr>";
+                                        echo "<i class='fa-solid fa-bookmark fa-2xl'></i>";
                                     }
+                                    ?>
+                                    <h2 class="font-size-l"><?php echo $row['judul']?><br><span class="inter-300">Diunggah pada <?php echo $row['waktu']?></span></h2>
+	                                    </div>
+                                    </a>
+                                    <hr>
+                                    <?php
                                 }   
                             } else {
                                 echo "<p class='inter-400'>Anda belum membuat materi :(<p>";
@@ -152,7 +160,29 @@ if (!isset($_SESSION['id'])) {
                         </div>
                         <div class="tugas-body" id="anggota-kelas" style="display: none;">
                             <h2 class="inter-500" style="margin: 0;">Anggota Kelas</h2>
+                            <hr style="border: 1px solid;">
                             <hr>
+                            <?php
+                            try {
+                                $stmt = $pdo->prepare("SELECT * FROM user JOIN anggota_kelas ON user.id = anggota_kelas.id_murid WHERE anggota_kelas.id_kelas = :id ORDER BY username ASC");
+                                $stmt->execute([':id'=>$idKelas]);
+
+                                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                                    echo "<div class='inter-400 anggota-kelas'>";
+                                    if ($row['foto_profil'] == '') {
+                                        echo "<span style='font-size: 50px;'><i class='fa-solid fa-circle-user'></i></span>";
+                                    } else {
+                                        echo "<img src='../../assets/images/user/".$row['foto_profil']."' alt='Foto Profil User' style='height: 50px; width: 50px; object-fit: cover; border-radius: 100px;'>";;
+                                    }
+                                    echo "<h2 class='inter-400 font-size-xl'>".$row['username']."<br><span class='font-size-l'>".$row['email']."</span><h2>";
+                                    echo "</div>";
+                                    echo "<hr style='margin: 0;'>";
+                                }  
+                            } catch (PDOException $e) {
+                                echo $e->getMessage();
+                            }
+                            
+                            ?>
                         </div>
                     </div>
                 </div>
