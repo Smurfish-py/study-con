@@ -104,8 +104,6 @@ if (!isset($_SESSION['id'])) {
                 echo "</div>";
                 echo "</div>";
             }
-
-            
             ?>
             <div class="class-body" style="display: flex; flex: 1; width: 100%; height: 100%; justify-content: center;">
                 <div class="pilihan-container" style="display: flex; gap: 15px; border: none;">
@@ -174,6 +172,6 @@ if (!isset($_SESSION['id'])) {
             </div>
         </div>
     </main>
-    <script src="../assets/javascript/scripts.js"></script>
+    <script src=../../assets/javascript/scripts.js"></script>
 </body>
 </html>
