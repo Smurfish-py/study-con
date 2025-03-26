@@ -174,6 +174,6 @@ if (!isset($_SESSION['id'])) {
             </div>
         </div>
     </main>
-    <script src=".p./assets/javascript/scripts.js"></script>
+    <script src="../assets/javascript/scripts.js"></script>
 </body>
 </html>
