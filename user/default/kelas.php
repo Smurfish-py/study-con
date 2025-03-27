@@ -95,7 +95,7 @@ if (!isset($_SESSION['id'])) {
                 if ($new_row['fullname'] == '') {
                     $teacher_fullname = '';
                 } else {
-                    $teacher_fullname = "(".$row['fullname'].")";
+                    $teacher_fullname = "(".$new_row['fullname'].")";
                 }
                 echo "<h1 class='inter-600' style='position: absolute; margin-left: 50px; color: white;'>".$row['nama_kelas']."<br><span class='inter-400' style='font-size: 20px; margin: 0;'>".$new_row['email']." ".$teacher_fullname."</span></h1>";
                 echo "</div>";
