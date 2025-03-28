@@ -87,6 +87,89 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <a href="../../logika/logout.php" class='font-size-md' style='text-decoration: none; color: #C00F0C;'>Logout from this device</a>
         </div>
     </div>
+    <?php 
+    if (isset($_GET['id'])) {
+        ?>
+        <script>
+            document.addEventListener("DOMContentLoaded", function(){
+                document.getElementById("pop-up-kelas").style.display = 'flex';
+            })
+        </script>
+        <?php
+    } else {
+        ?>
+        <script>
+            document.addEventListener("DOMContentLoaded", function(){
+                document.getElementById("pop-up-kelas").style.display = 'none';
+            })
+        </script>
+        <?php
+    }
+    ?>
+
+    <div class="pop-up-kelas" id="pop-up-kelas">
+        <div class="pop-up-kelas-container">
+            <?php
+            $idKelas = $_GET['id'];
+
+            $stmt = $pdo->prepare("SELECT * FROM kelas WHERE id = :id");
+            $stmt->execute([':id'=>$idKelas]);
+
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            $stmt_guru = $pdo->prepare("SELECT * FROM user WHERE id = :id_guru");
+            $stmt_guru->execute([':id_guru'=>$row['id_guru']]);
+
+            $row_guru = $stmt_guru->fetch(PDO::FETCH_ASSOC);
+
+            $stmt_tugas = $pdo->prepare("SELECT * FROM guru_tugas WHERE id_guru = :id");
+            $stmt_tugas->execute([':id'=>$row_guru['id']]);
+            $row_tugas = $stmt_tugas->rowCount();
+
+            $stmt_anggota = $pdo->prepare("SELECT * FROM anggota_kelas WHERE id_kelas = :id");
+            $stmt_anggota->execute([':id'=>$idKelas]);
+            $row_anggota = $stmt_anggota->rowCount();
+            ?>
+            <div class="pop-up-kelas-header" style="background-image: url('../../assets/images/kelas/<?php
+            if ($row['gambar_header_kelas'] == '') {
+                echo "default.jpg";
+            } else {
+                echo $row['gambar_header_kelas'];
+            }
+            ?>');">
+            <h1 class="inter-600 font-size-xl" style="position: absolute;"><?php echo $row['nama_kelas']?><br><span class="inter-400 font-size-l"><?php echo $row_guru['email']?></span></h1>
+            </div>
+            <div class="guru-section">
+                <?php 
+                if ($row_guru['foto_profil'] == '') {
+                    ?>
+                    <span style="height: 100px; width: 100px;font-size: 100px;"><i class="fa-solid fa-circle-user"></i></span>
+                    <?php
+                } else {
+                    ?>
+                    <img src="../../assets/images/user/<?php echo $row_guru['foto_profil']?>" alt="Foto Profil Guru" style="width: 100px; height: 100px; object-fit: cover; border-radius: 100px;">
+                    <?php
+                }
+                ?>
+                <h2 class="inter-600 font-size-l" style="margin-left: 20px;">ID Guru : <span class="inter-400"><?php echo $row_guru['id']?></span><br>Dibuat oleh : <span class="inter-400"><?php echo $row_guru['email']?></span></h2>
+            </div>
+            <hr style="margin: 20px 30px;">
+            <div class="pop-up-kelas-data">
+                <h2 class="inter-600 font-size-l">Waktu dibuat : <span class="inter-400"> <?php echo $row['waktu_dibuat']?></span></h2>
+                <h2 class="inter-600 font-size-l">Jumlah tugas dan Materi : <span class="inter-400"> <?php echo $row_tugas?></span></h2>
+                <h2 class="inter-600 font-size-l">Jumlah anggota : <span class="inter-400"> <?php echo $row_anggota?></span></h2>
+                <h2 class="inter-600 font-size-l">Status kelas : <?php
+                if ($row['status_kelas'] == 'active') {
+                    echo "<span class='inter-400' style='color: green;'>".$row['status_kelas']."</span> ";
+                } else {
+                    echo "<span class='inter-400' style='color: red;'>".$row['status_kelas']."</span> ";
+                }
+                ?></h2>
+            </div>
+            <hr>
+            <a class="inter-400" href="list_kelas.php" style="display: inline-block; width: 100%; text-decoration: none; color: rgba(0, 0, 0, 0.7); text-align: center; margin: 10px 0 20px 0">kembali</a>
+        </div>
+    </div>
     <main style="display: flex; align-items: center; justify-content: center; height: 100vh;">
         <div class="inter-400 list-pengguna-container">
             <div class="inter-300" style="margin: 0; display: flex; justify-content: space-between; align-items: center;">
@@ -100,7 +183,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 ?>
-                <a href="" class="class-list-admin" style="background-image: url('../../assets/images/kelas/<?php
+                <a href="list_kelas.php?id=<?php echo $row['id']?>" class="class-list-admin" style="background-image: url('../../assets/images/kelas/<?php
                 if ($row['gambar_header_kelas'] != '') {
                     echo $row['gambar_header_kelas'];
                 } else {
