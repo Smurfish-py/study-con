@@ -98,7 +98,7 @@ if (!isset($_SESSION['id'])) {
                         <a href="list_request.php"><i class="fa-solid fa-user-plus fa-xl"></i> <span style="margin-left: 20px;">Daftar Request</span></a>
                     </div>
                     <div class="sub-options inter-600">
-                        <a href=""><i class="fa-solid fa-list fa-xl"></i> <span style="margin-left: 28px;">List Kelas</span></a>
+                        <a href="list_kelas.php"><i class="fa-solid fa-list fa-xl"></i> <span style="margin-left: 28px;">List Kelas</span></a>
                     </div>
                 </div>
                 <div class="options">
