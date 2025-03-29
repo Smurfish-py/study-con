@@ -35,6 +35,18 @@ function generateIdKelas($pdo) {
     return $randomNumber;
 }
 
+function generateIdFile($pdo, $nama_tabel) {
+    do {
+        $randomNumber = random_int(1000, 99999);
+
+        $stmt = $pdo->prepare("SELECT COUNT(*) FROM $nama_tabel WHERE id_file = ?");
+        $stmt->execute([$randomNumber]);
+        $exists = $stmt->fetchColumn();
+    } while ($exists > 0);
+
+    return $randomNumber;
+}
+
 function buatTugas_log($pelaku, $id_kelas, $judul_subjek){
     include "koneksi.php";
     $query = "INSERT INTO website_log (log) VALUES (:log)";

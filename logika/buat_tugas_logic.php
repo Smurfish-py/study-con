@@ -13,7 +13,7 @@ if (!isset($_SESSION['id'])) {
 }
 
 if (isset($_POST)) {
-    $id = generateIdKelas($pdo);
+    $id = generateIdFile($pdo, "file_tugas_guru");
     $idKelas = $_POST['id-kelas'];
     $idGuru = $_SESSION['id'];
     $judul = $_POST['judul-subjek'];
@@ -39,7 +39,7 @@ if (isset($_POST)) {
             
             $file_tmp = $_FILES['file-subjek']['tmp_name'][$i];
             
-            $stmt = $pdo->prepare("INSERT INTO file_tugas_guru (id, id_kelas, id_guru, nama_file) VALUES (:id, :id_kelas, :id_guru, :nama_file)");
+            $stmt = $pdo->prepare("INSERT INTO file_tugas_guru (id_file, id_kelas, id_guru, nama_file) VALUES (:id_file, :id_kelas, :id_guru, :nama_file)");
             $stmt->execute(['id'=>$id, 'id_kelas'=>$idKelas, 'id_guru'=>$idGuru, 'nama_file'=>$nama_file_baru]);
             move_uploaded_file($file_tmp, $path.$nama_file_baru);
         }
