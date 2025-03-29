@@ -251,6 +251,85 @@ body {
     gap: 20px;
 }
 
+.tugas-center {
+    display: flex;
+    height: 500px;
+    width: 100%;
+    margin-top: 90px;
+    gap: 20px;
+}
+
+.tugas-container {
+    background-color: white;
+    border: 1px solid rgba(0, 0, 0, 0.4);
+    height: 500px;
+    padding: 0 20px;
+    border-radius: 18px;
+}
+
+.tugas-header-komentar {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.tugas-isi {
+    padding: 20px 40px;
+    height: 75%;
+}
+
+.tugas-isi-komentar {
+    height: 73%;
+    border: 1px solid rgba(0, 0, 0, 0.4);
+    overflow-y: auto;
+}
+
+.tugas-isi-deskripsi {
+    height: 83%;
+    width: 100%;
+    overflow-y: auto;
+} 
+
+.tugas-isi-lampiran {
+    height: fit-content;
+    width: 90%;
+} 
+
+.tugas-form-komentar-input {
+    border-radius: 100px;
+    padding: 0 20px;
+}
+
+.tugas-isi-action {
+    margin: 0 40px;
+}
+
+.tugas-isi-kirim-file {
+    display: flex;
+    gap: 80px;
+    padding: 0 20px;
+    margin-top: 10px;
+}
+
+.tugas-isi-upload-file {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid;
+    border-radius: 18px;
+}
+
+.tugas-isi-upload-file-button {
+    flex: 1;
+    height: 50px;
+    background-color: black;
+    color: white;
+    border: none;
+    border-radius: 18px;
+}
+
 .buat-kelas-container {
     display: flex;
     background-color: white;
