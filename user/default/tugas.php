@@ -70,6 +70,25 @@ if (!isset($_SESSION['id'])) {
             <a href="../../logika/logout.php" class='font-size-md' style='text-decoration: none; color: #C00F0C;'>Logout from this device</a>
         </div>
     </div>
+    <?php
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $id_pengguna = $_SESSION['id'];
+        $id_kelas = $_GET['id_kelas'];
+        $id_tugas = $_GET['id'];
+        $isi_komentar = $_POST['komentar'];
+
+        if ($isi_komentar == '') {
+            ?>
+            <script>
+                alert("Input tidak boleh kosong!");
+            </script>
+            <?php
+        } else {
+            $komentar_stmt = $pdo->prepare("INSERT INTO komentar_tugas (id_user, id_kelas, id_tugas, isi) VALUES (:id_user, :id_kelas, :id_tugas, :isi_komentar);");
+            $komentar_stmt->execute([':id_user'=>$id_pengguna, 'id_kelas'=>$id_kelas, ':id_tugas'=>$id_tugas, ':isi_komentar'=>$isi_komentar]);
+        }
+    }
+    ?>
     <main style="display: flex; align-items: center; justify-content: center; height: 100vh;">
         <div class="tugas-center">
             <div class="tugas-container" style="flex: 0.65;">
@@ -79,11 +98,36 @@ if (!isset($_SESSION['id'])) {
                 </div>
                 <hr style="border: 1px solid rgba(0, 0, 0, 1);">
                 <div class="tugas-isi-komentar">
+                    <?php
+                    $komentar_stmt = $pdo->prepare("SELECT * FROM komentar_tugas INNER JOIN user ON user.id = komentar_tugas.id_user WHERE id_kelas = :id_kelas AND id_tugas = :id_tugas");
+                    $komentar_stmt->execute([':id_kelas'=>$_GET['id_kelas'], 'id_tugas'=>$_GET['id']]);
 
+                    if ($komentar_stmt->rowCount()>0) {
+                        while ($row = $komentar_stmt->fetch(PDO::FETCH_ASSOC)) {
+                            ?>
+                            <div class="tugas-isi-komentar-user">
+                            <?php
+                            if ($row['foto_profil'] == '') {
+                                echo "<i class='fa-solid fa-circle-user' style='font-size: 40px;'></i>";
+                            } else {
+                                echo "<img src='../../assets/images/user/".$row['foto_profil']."' style='height: 40px; width: 40px; object-fit: cover; border-radius: 100px; border: 1px solid rgba(0, 0, 0, 0.5);'>";
+                            }
+                            ?>
+                                <h2 class="inter-600 font-size-l" style="padding-left: 20px;"><?php echo $row['email']?><br><span class="inter-400 font-size-md"><?php echo $row['isi'];?></span></h2>
+                            </div>
+                            
+                            <hr>
+                            <?php
+                        }
+                    } else {
+                        echo "<p class='inter-400' style='margin: 20px 50px; color: rgba(0, 0, 0, 0.5);'>Jadilah yang pertama berkomentar!</p>";
+                    }
+                    
+                    ?>
                 </div>
-                <hr>
-                <form action="tugas.php" method="post" class="inter-400" style="display: flex; gap: 10px;">
-                    <input class="tugas-form-komentar-input" type="text" placeholder="Tulis komentarmu disini..." style="flex: 1.85;">
+                <br>
+                <form action="tugas.php?id_kelas=<?php echo $_GET['id_kelas']?>&id=<?php echo $_GET['id']?>" method="post" class="inter-400" style="display: flex; gap: 10px;">
+                    <input class="tugas-form-komentar-input" type="text" placeholder="Tulis komentarmu disini..." style="flex: 1.85;" name="komentar">
                     <button type="submit" style="background-color: black; border: none; flex: 0.15; height: 40px; width: 40px; color: white; border-radius: 10px;"><i class="fa-regular fa-paper-plane" style="font-size: 20px;"></i></button>
                 </form>
             </div>
@@ -137,10 +181,10 @@ if (!isset($_SESSION['id'])) {
                     if ($nilai_stmt->rowCount() == '0') {
                         ?>
                         <hr>
-                        <form action="" method="post">
+                        <form action="" method="post" enctype="multipart/form-data">
                             <div class="tugas-isi-kirim-file">
                                 <label class="tugas-isi-upload-file inter-700 font-size-l" for="file-tugas" style="flex: 1;"><span style="padding-right: 20px;"><i class="fa-solid fa-arrow-up-from-bracket fa-xl"></i></span>Upload File</label>
-                                <input type="file" name="file-tugas" id="file-tugas" required>
+                                <input type="file" name="file-tugas[]" id="file-tugas" required multiple>
                                 <button class="inter-700 font-size-l tugas-isi-upload-file-button" type="submit"><span style="padding-right: 20px;"><i class="fa-regular fa-paper-plane fa-xl"></i></span>Kirim Tugas</button>
                             </div>
                             
