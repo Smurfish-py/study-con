@@ -147,7 +147,7 @@ if (!isset($_SESSION['id'])) {
                                 echo "<hr style=''>";
                                 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                                     ?>
-                                    <a href="" class="inter-400 tugas">
+                                    <a href="tugas.php?id_kelas=<?php echo $idKelas?>&id=<?php echo $row['id']?>" class="inter-400 tugas">
                                         <div class="link-tugas">
                                     <?php
                                     if ($row['tipe'] == 'tugas') {
