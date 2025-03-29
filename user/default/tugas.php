@@ -115,7 +115,6 @@ if (!isset($_SESSION['id'])) {
                             ?>
                                 <h2 class="inter-600 font-size-l" style="padding-left: 20px;"><?php echo $row['email']?><br><span class="inter-400 font-size-md"><?php echo $row['isi'];?></span></h2>
                             </div>
-                            
                             <hr>
                             <?php
                         }
@@ -151,7 +150,7 @@ if (!isset($_SESSION['id'])) {
                         <h2 class="inter-700 font-size-l">Daftar lampiran :</h2>
                         <div class="tugas-isi-lampiran">
                             <?php
-                            $new_stmt = $pdo->prepare("SELECT * FROM file_tugas_guru WHERE id = :id");
+                            $new_stmt = $pdo->prepare("SELECT * FROM file_tugas_guru WHERE id_file = :id");
                             $new_stmt->execute([':id'=>$row['id_file']]);
 
                             while ($new_row = $new_stmt->fetch(PDO::FETCH_ASSOC)) {
@@ -181,18 +180,17 @@ if (!isset($_SESSION['id'])) {
                     if ($nilai_stmt->rowCount() == '0') {
                         ?>
                         <hr>
-                        <form action="" method="post" enctype="multipart/form-data">
+                        <form action="../../logika/kirim_tugas.php?id_kelas=<?php echo $_GET['id_kelas']?>&id_tugas=<?php echo $_GET['id']?>" method="post" enctype="multipart/form-data">
                             <div class="tugas-isi-kirim-file">
                                 <label class="tugas-isi-upload-file inter-700 font-size-l" for="file-tugas" style="flex: 1;"><span style="padding-right: 20px;"><i class="fa-solid fa-arrow-up-from-bracket fa-xl"></i></span>Upload File</label>
                                 <input type="file" name="file-tugas[]" id="file-tugas" required multiple>
                                 <button class="inter-700 font-size-l tugas-isi-upload-file-button" type="submit"><span style="padding-right: 20px;"><i class="fa-regular fa-paper-plane fa-xl"></i></span>Kirim Tugas</button>
                             </div>
-                            
                         </form>
                         <?php
                     } else if ($nilai_row['status'] == 'diserahkan') {
                         ?>
-                        <form action="" method="post" onsubmit="return confirm('Apakah anda yakin untuk membatalkan? \nPembatalan berarti anda harus mengupload ulang tugas anda.');">
+                        <form action="?action=batal" method="post" onsubmit="return confirm('Apakah anda yakin untuk membatalkan? \nPembatalan berarti anda harus mengupload ulang tugas anda.');">
                             <input type="hidden" name="status" value="belum diserahkan">
                             <button type="submit">Batal Kirim</button> 
                         </form>
