@@ -286,6 +286,15 @@ body {
     overflow-y: auto;
 }
 
+.tugas-isi-komentar-user {
+    display: flex;
+    align-items: center;
+    height: fit-content;
+    width: fit-content;
+    max-width: 370px;
+    padding: 0 20px;
+}
+
 .tugas-isi-deskripsi {
     height: 83%;
     width: 100%;
