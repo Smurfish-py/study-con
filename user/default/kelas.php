@@ -55,7 +55,7 @@ if (!isset($_SESSION['id'])) {
             <?php
             if(file_exists($path) != false && $_SESSION['foto_profil'] != ''){
                 echo "<img src='$path' style='width: 150px; height: 150px; object-fit: cover; border-radius: 100px; border: 1px solid rgba(0, 0, 0, 0.3);'>";
-                echo "<p class='font-size-l'>My Profile<br><span class='inter-300 font-size-md'><a href='edit-profile.php' style='text-decoration: none; color: rgba(0, 0, 0, 0.8);'>Customize your profile</a></span></p>";
+                echo "<p class='font-size-l'>My Profile<br><span class='inter-300 font-size-md'><a href='../edit-profile.php' style='text-decoration: none; color: rgba(0, 0, 0, 0.8);'>Customize your profile</a></span></p>";
             } else {
                 ?>
                 <div style="display: flex; align-items: center; justify-content: center; width: 220px; height: 150px; text-align: center; ">
@@ -63,7 +63,7 @@ if (!isset($_SESSION['id'])) {
                 </div>
                     
             <?php
-                echo "<p class='font-size-l'>My Profile<br><span class='inter-300 font-size-md'><a href='edit-profile.php' style='text-decoration: none; color: rgba(0, 0, 0, 0.8);'>Customize your profile</a></span></p>";
+                echo "<p class='font-size-l'>My Profile<br><span class='inter-300 font-size-md'><a href='../edit-profile.php' style='text-decoration: none; color: rgba(0, 0, 0, 0.8);'>Customize your profile</a></span></p>";
             }
                 
             ?>

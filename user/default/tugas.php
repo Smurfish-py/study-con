@@ -133,18 +133,38 @@ if (!isset($_SESSION['id'])) {
             <div class="tugas-container" style="flex: 1.35;">
                 <div class="tugas-isi">
                     <?php
+                    
                     if (isset($_GET['id'])) {
                         $idTugas = $_GET['id'];
                         
+                        $nilai_stmt = $pdo->prepare("SELECT * FROM nilai_murid WHERE id_murid = :id AND id_kelas = :id_kelas AND id_tugas = :id_tugas");
+                        $nilai_stmt->execute([':id'=>$_SESSION['id'], 'id_kelas'=> $_GET['id_kelas'], ':id_tugas'=>$idTugas]);
+                        $nilai_row = $nilai_stmt->fetch(PDO::FETCH_ASSOC);
+
+
                         $stmt = $pdo->prepare("SELECT * FROM guru_tugas WHERE id = :id");
                         $stmt->execute([':id'=>$idTugas]);
                         $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
 
                         echo "<h2 class='inter-600' style='margin: 0;'>".$row['judul']."<br><span class='inter-400 font-size-l'>Dibuat : ".$row['waktu']."</span></h2>";
                     }
                     ?>
                     <hr>
                     <div class="tugas-isi-deskripsi">
+                        <?php 
+                        if ($row['tipe'] == 'materi') {
+
+                        } else if ($row['tipe'] == 'tugas') {
+                            if ($nilai_row['status'] == '') {
+                                echo "<p class='inter-400'><b>Status :</b> <span style='color: red;'>Belum dikerjakan</span></p>";
+                            } else if ($nilai_row['status'] == 'diserahkan') {
+                                echo "<p class='inter-400'><b>Status :</b> <span style='color: orange;'>Menunggu penilaian</span></p>";
+                            } else if ($nilai_row['status'] == 'dinilai') {
+                                echo "<p class='inter-400'><b>Nilai anda :</b> <span style='color: Green;'>"/$nilai_row['nilai']."</span></p>";
+                            }
+                        }
+                        ?>
                         <p class="inter-400"><?php echo $row['deskripsi']?></p>
                         <br>
                         <h2 class="inter-700 font-size-l">Daftar lampiran :</h2>
@@ -162,6 +182,20 @@ if (!isset($_SESSION['id'])) {
                             }
                             ?>
                         </div>
+                        <?php 
+                        if ($nilai_row['status'] == 'diserahkan' || $nilai_row['status'] == 'dinilai') {
+                            ?>
+                            <br>
+                            <h2 class="inter-700 font-size-l">Lampiran anda : </h2>
+                            <?php
+                            $stmt1 = $pdo->prepare("SELECT * FROM nilai_murid JOIN murid_tugas ON murid_tugas.id_file = nilai_murid.id_file WHERE id_murid = :id");
+                            $stmt1->execute([':id'=>$_SESSION['id']]);
+                            while ($row1 = $stmt1->fetch(PDO::FETCH_ASSOC)) {
+                                $parts = explode("_", $row1['nama_file']);
+                                echo "<a href='../../assets/documents/user/".$row1['nama_file']."' class='inter-400'>-> ".$parts[2]."</a><br>";
+                            }
+                        }
+                        ?>
                     </div>
                 </div>
                 <?php
@@ -171,11 +205,6 @@ if (!isset($_SESSION['id'])) {
                     ?>
                     <div class="tugas-isi-action">
                     <?php
-                    
-                    $nilai_stmt = $pdo->prepare("SELECT * FROM nilai_murid WHERE id_murid = :id AND id_kelas = :id_kelas AND id_tugas = :id_tugas");
-                    $nilai_stmt->execute([':id'=>$_SESSION['id'], 'id_kelas'=> $_GET['id_kelas'], ':id_tugas'=>$idTugas]);
-
-                    $nilai_row = $nilai_stmt->fetch(PDO::FETCH_ASSOC);
                     
                     if ($nilai_stmt->rowCount() == '0') {
                         ?>
@@ -190,9 +219,10 @@ if (!isset($_SESSION['id'])) {
                         <?php
                     } else if ($nilai_row['status'] == 'diserahkan') {
                         ?>
-                        <form action="?action=batal" method="post" onsubmit="return confirm('Apakah anda yakin untuk membatalkan? \nPembatalan berarti anda harus mengupload ulang tugas anda.');">
+                        <hr>
+                        <form action="../../logika/kirim_tugas.php?action=batal&id_tugas=<?php echo $idTugas?>&id_kelas=<?php echo $_GET['id_kelas']?>" method="post" onsubmit="return confirm('Apakah anda yakin untuk membatalkan? \nPembatalan berarti anda harus mengupload ulang tugas anda.')" style="width: 100%; display: flex; justify-content: center; margin-top: 10px;">
                             <input type="hidden" name="status" value="belum diserahkan">
-                            <button type="submit">Batal Kirim</button> 
+                            <button class="inter-700 font-size-xl tugas-isi-button-batal" type="submit">Batal Kirim</button> 
                         </form>
                         <?php
                     } else if ($nilai_row['status'] == 'dinilai') {
