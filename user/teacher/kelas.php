@@ -131,14 +131,21 @@ if (!isset($_SESSION['id'])) {
                             </div>
                             <hr style="border: 1px solid rgba(0, 0, 0, 1);">
                             <?php
-                            $stmt = $pdo->prepare("SELECT * FROM guru_tugas WHERE id_kelas=:id_kelas AND id_guru=:id_guru");
+                            $stmt = $pdo->prepare("SELECT * FROM guru_tugas WHERE id_kelas=:id_kelas AND id_guru=:id_guru ORDER BY waktu DESC");
                             $stmt->execute(['id_kelas'=>$idKelas, 'id_guru'=>$_SESSION['id']]);
                             
                             if ($stmt->rowCount()>0) {
                                 echo "<hr style=''>";
                                 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                                     ?>
-                                    <a href="penilaian.php?id_tugas=<?php echo $row['id']?>" class="inter-400 tugas">
+                                    <a href="<?php 
+                                    if ($row['tipe'] == 'tugas') {
+                                        echo "penilaian.php?id_tugas=".$row['id']."&id_kelas=".$_GET['id'];
+
+                                    } else if ($row['tipe'] == 'materi') {
+                                        echo "materi.php?id_tugas=".$row['id']."&id_kelas=".$_GET['id'];
+                                    }
+                                    ?>" class="inter-400 tugas">
                                         <div class="link-tugas">
                                     <?php
                                     if ($row['tipe'] == 'tugas') {

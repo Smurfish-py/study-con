@@ -113,7 +113,13 @@ if (!isset($_SESSION['id'])) {
                                 echo "<img src='../../assets/images/user/".$row['foto_profil']."' style='height: 40px; width: 40px; object-fit: cover; border-radius: 100px; border: 1px solid rgba(0, 0, 0, 0.5);'>";
                             }
                             ?>
-                                <h2 class="inter-600 font-size-l" style="padding-left: 20px;"><?php echo $row['email']?><br><span class="inter-400 font-size-md"><?php echo $row['isi'];?></span></h2>
+                                <h2 class="inter-600 font-size-l" style="padding-left: 20px;"><?php 
+                                if ($row['status'] == 'teacher') {
+                                    echo $row['username']."<span class='inter-500 font-size-md' style='color: red;'> (Guru)</span>";
+                                } else {
+                                    echo $row['username'];
+                                }
+                                ?><br><span class="inter-400 font-size-md"><?php echo $row['isi'];?></span></h2>
                             </div>
                             <hr>
                             <?php

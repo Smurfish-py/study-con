@@ -140,7 +140,7 @@ if (!isset($_SESSION['id'])) {
                             <h2 class="inter-500" style="margin: 0;">Tugas dan Materi</h2>
                             <hr>
                             <?php
-                            $stmt = $pdo->prepare("SELECT * FROM guru_tugas WHERE id_kelas=:id_kelas");
+                            $stmt = $pdo->prepare("SELECT * FROM guru_tugas WHERE id_kelas=:id_kelas ORDER BY waktu DESC");
                             $stmt->execute(['id_kelas'=>$idKelas]);
                             
                             if ($stmt->rowCount()>0) {
