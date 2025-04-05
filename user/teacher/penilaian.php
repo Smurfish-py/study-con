@@ -85,37 +85,50 @@ if (!isset($_SESSION['id'])) {
                 $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
                 ?>
-                <h2 class="inter-600" style="margin: 0;"><?php echo $row['judul']?><br><span class="inter-400 font-size-l">Halaman penilaian dan komentar tugas</span></h2>
+                <div class="tugas-komentar-section-body-header">
+                    <h2 class="inter-600" style="margin: 0;"><?php echo $row['judul']?><br><span class="inter-400 font-size-l">Halaman penilaian dan komentar tugas</span></h2>
+                    <a href="kelas.php?id=<?php echo $id_kelas?>" class="inter-500 font-size-l" style="color: black; text-decoration: none;padding-right: 10px;">Kembali</a>
+                </div>
                 <hr style="margin: 0;">
                 <div class="tugas-penilaian-section-body">
                     <div class="tugas-penilaian-section-list-pengirim-container">
-                        <div class="tugas-penilaian-list-section">
+                        <div class="tugas-penilaian-list-section" style="padding-top: 10px;">
                             <?php
-                            $list_pengirim = $pdo->prepare("SELECT * FROM user JOIN nilai_murid ON nilai_murid.id_murid = user.id WHERE nilai_murid.status = :status");
-                            $list_pengirim->execute([':status'=>'diserahkan']);
-                            echo "<hr style='margin-top: 0;'>";
-                            while ($pengirim_row = $list_pengirim->fetch(PDO::FETCH_ASSOC)) {
-                                ?>
-                                <a href="" class="tugas-penilaian-list-user">
-                                    <div class="tugas-penilaian-list-pengirim-inline">
-                                    <?php
-                                    if ($pengirim_row['foto_profil'] == '') {
-                                        echo "<i class='fa-solid fa-circle-user' style='font-size: 40px;'></i>";
-                                    } else {
-                                        echo "<img src='../../assets/images/user/".$pengirim_row['foto_profil']."' style='height: 40px; width: 40px; object-fit: cover; border-radius: 100px; border: 1px solid rgba(0, 0, 0, 0.3);'>";
-                                    }
+                            $list_pengirim = $pdo->prepare("SELECT * FROM user JOIN nilai_murid ON nilai_murid.id_murid = user.id WHERE nilai_murid.status in (:diserahkan, :dinilai) AND nilai_murid.id_tugas = :id_tugas ORDER BY nilai_murid.status = 'diserahkan' DESC");
+                            $list_pengirim->execute([':diserahkan'=>'diserahkan', ':dinilai'=>'dinilai', ':id_tugas'=>$id_tugas]);
+                            if ($list_pengirim->rowCount() == 0) {
+                                echo "<p class='inter-400' style='text-align: center;'>Belum ada yang mengirim tugas :(</p>";
+                            } else {
+                                while ($pengirim_row = $list_pengirim->fetch(PDO::FETCH_ASSOC)) {
                                     ?>
-                                    <h3 class="inter-600" style="line-height: 1; margin-left: 10px;"><?php echo $pengirim_row['username']?><br><span class="inter-400 font-size-md">NIS: <?php echo $pengirim_row['NIS']?><br>Waktu pengumpulan: <?php echo $pengirim_row['waktu']?></span></h3>
-                                    </div>
-                                </a>
-                                <br>
-                                <hr>
-                                <?php
+                                    <a href="penilaian.php?id_tugas=<?php echo $id_tugas?>&id_kelas=<?php echo $id_kelas?>&id_user=<?php echo $pengirim_row['id_murid']?>" class="tugas-penilaian-list-user">
+                                        <div class="tugas-penilaian-list-pengirim-inline">
+                                        <?php
+                                        if ($pengirim_row['foto_profil'] == '') {
+                                            echo "<i class='fa-solid fa-circle-user' style='font-size: 40px;'></i>";
+                                        } else {
+                                            echo "<img src='../../assets/images/user/".$pengirim_row['foto_profil']."' style='height: 40px; width: 40px; object-fit: cover; border-radius: 100px; border: 1px solid rgba(0, 0, 0, 0.3);'>";
+                                        }
+                                        ?>
+                                        <h3 class="inter-600" style="line-height: 1; margin-left: 10px;"><?php
+                                        if ($pengirim_row['status'] == 'diserahkan') {
+                                            echo $pengirim_row['username'];
+                                        } else {
+                                            echo $pengirim_row['username']." <span class='inter-500-italic font-size-l' style='color: green;'>(Dinilai)</span>";
+                                        }
+                                        ?><br><span class="inter-400 font-size-md">NIS: <?php echo $pengirim_row['NIS']?><br>Waktu pengumpulan: <?php echo $pengirim_row['waktu']?></span></h3>
+                                        </div>
+                                    </a>
+                                    <br>
+                                    <hr>
+                                    <?php
+                                }    
                             }
+                            
                             ?>
                         </div>
                         <div class="tugas-penilaian-komentar-button-section">
-                            <a href="" class="tugas-nilai-comment-button">
+                            <a href="penilaian.php?id_tugas=<?php echo $_GET['id_tugas']?>&id_kelas=<?php echo $_GET['id_kelas']?>&action=komentar" class="tugas-nilai-comment-button">
                                 <div class="tugas-nilai-comment-button-label">
                                     <h3 class="inter-600">Buka komentar<span style="margin-left: 10px;"><i class="fa-solid fa-comments"></i></span></h3>
                                 </div>
@@ -143,7 +156,13 @@ if (!isset($_SESSION['id'])) {
                                         <?php
                                     }
                                     ?>
-                                    <h3 class="inter-600" style='margin-left: 10px;'><?php echo $detail_row['username']?><br><span class="inter-400 font-size-l">NIS: <?php echo $detail_row['NIS']?>, Waktu pengiriman: <?php echo $detail_row['waktu']?></span></h3>
+                                    <h3 class="inter-600" style='margin-left: 10px;'><?php 
+                                    if ($detail_row['status'] == 'diserahkan') {
+                                        echo $detail_row['username'];
+                                    } else {
+                                        echo $detail_row['username']."<span style='color: green;'>(Dinilai)</span>";
+                                    }
+                                    ?><br><span class="inter-400 font-size-l">NIS: <?php echo $detail_row['NIS']?>, Waktu pengiriman: <?php echo $detail_row['waktu']?></span></h3>
                                 </div>
                                 <div class="tugas-penilaian-lampiran">
                                     <h3 class="inter-500">Lampiran tugas : </h3>
@@ -159,16 +178,16 @@ if (!isset($_SESSION['id'])) {
                                 </div>
                             </div>
                             <div class="tugas-penilaian-nilai-section">
-                                <form action="" method="post">
+                                <form action="" method="post" onsubmit="return confirm('Apakah anda yakin ingin submit? (Nilai bisa dirubah jika ada kesalahan)')">
                                     <div class="tugas-penilaian-nilai-section-header">
                                         <h3 class="inter-500" style="margin: 0;">Berikan komentar atau masukkan pribadi</h3>
                                         <div class="nilai">
                                             <label for="nilai-murid" class="inter-600">Beri nilai : </label>
-                                            <input class="inter-500" type="number" style="width: 50px; height: 20px;" name="nilai-murid" id="nilai-murid">
+                                            <input class="inter-500" type="number" style="width: 50px; height: 20px;" name="nilai-murid" id="nilai-murid" value="<?php echo $detail_row['nilai']?>">
                                         </div>
                                     </div>
                                     <div class="tugas-penilaian-nilai-section-body">
-                                        <textarea class="inter-400" name="masukan-pribadi" id="masukan-pribadi" style="min-height: 116px; max-height: 116px; min-width: 99.3%; max-width: 99.3%; margin-bottom: 7px;" placeholder="Masukkan komentar pribadi di sini..."></textarea>
+                                        <textarea class="inter-400" name="masukan-pribadi" id="masukan-pribadi" style="min-height: 116px; max-height: 116px; min-width: 99.3%; max-width: 99.3%; margin-bottom: 7px;" placeholder="Masukkan komentar pribadi di sini..."><?php echo $detail_row['deskripsi']?></textarea>
                                     </div>
                                     <div class="tugas-penilaian-nilai-submit">
                                         <button class="tugas-penilaian-nilai-submit-button" type="submit" style="height: 40px; width: 100%;">
@@ -178,16 +197,85 @@ if (!isset($_SESSION['id'])) {
                                 </form>
                             </div>
                             <?php
+                        } else {
+                            ?>
+                            <p class="inter-400" style="text-align: center;">Pilih user dari menu sebelah kiri untuk melihat detail pengumpulan tugas.</p>
+                            <?php
                         }
                         ?>
                     </div> 
                 </div>  
             </div>
             <div class="tugas-komentar-section" id="tugas-komentar-section" style="display: none;">
+                <div class="tugas-komentar-section-body">
+                    <?php
+                    $id_kelas = $_GET['id_kelas'];
+                    $id_tugas = $_GET['id_tugas'];
 
+                    $stmt = $pdo->prepare("SELECT * FROM user JOIN komentar_tugas ON komentar_tugas.id_user = user.id WHERE komentar_tugas.id_tugas = :id_tugas AND komentar_tugas.id_kelas = :id_kelas");
+                    
+                    $stmt->execute([':id_tugas'=>$id_tugas, ':id_kelas'=>$id_kelas]);
+                    ?>
+                    <h1 class="inter-600 font-size-header" style="margin: 0;">Komentar Tugas <span class="inter-400 font-size-l">(<a href="penilaian.php?id_tugas=<?php echo $_GET['id_tugas']?>&id_kelas=<?php echo $_GET['id_kelas']?>" style="text-decoration: none;">Kembali ke sesi penilaian</a>)</span><br><span class="inter-400 font-size-l"><?php ?></span></h1>
+                    <hr style="margin: 0 0 3px 0;">
+                    <div class="tugas-komentar-section-list-komentar">
+                        <div class="tugas-komentar-section-list-komentar-section">
+                        <?php
+                        while ($komentar = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                            ?>
+                            <div class="tugas-komentar-section-komentar-user">
+                                <?php
+                                if ($komentar['foto_profil'] == '') {
+                                    echo "<i class='fa-solid fa-circle-user' style='font-size: 40px;'></i>";
+                                } else {
+                                    echo "<img src='../../assets/images/user/".$komentar['foto_profil']."' style='height: 40px; width: 40px; object-fit: cover; border-radius: 100px; border: 1px solid rgba(0, 0, 0, 0.3);'>";
+                                }
+
+                                ?>
+                                <h3 class="inter-600" style="margin-left: 15px;"><?php
+                                if ($komentar['status'] == 'teacher') {
+                                    echo $komentar['username']."<span class='inter-500 font-size-l' style='color: red;'> (Guru)</span>";
+                                } else {
+                                    echo $komentar['username'];
+                                }
+                                ?><br><span class="inter-400 font-size-l"><?php echo $komentar['isi']?></span></h3>
+                            </div>
+                            <hr style="margin: 0px;">
+                            <?php
+                        }
+                        ?>
+                        </div>
+                        <div class="tugas-komentar-section-kirim-komentar">
+                            <hr style="margin: 3px;">
+                            <form action="" method="post" class="tugas-komentar-section-kirim-komentar-input">
+                                <input type="text" class="inter-400 font-size-l tugas-komentar-section-kirim-komentar-input-text" placeholder="Masukkan komentar anda disini...">
+                                <button type="submit" class="tugas-komentar-section-kirim-komentar-submit"><i class="fa-solid fa-paper-plane font-size-xl"></i></button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </main>
     <script src="../../assets/javascript/scripts.js"></script>
+    <?php
+    if (isset($_GET['action'])) {
+        if ($_GET['action'] == 'komentar') {
+        ?>
+            <script>
+                const komentar = document.getElementById("tugas-komentar-section");
+                const penilaian = document.getElementById("tugas-penilaian-section");
+
+                document.addEventListener("DOMContentLoaded", function(){
+                    if (penilaian.style.display != 'none') {
+                        penilaian.style.display = 'none';
+                        komentar.style.display = 'flex';
+                    }
+                });
+            </script>
+        <?php
+        }
+    }
+    ?>
 </body>
 </html>
