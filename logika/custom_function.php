@@ -70,4 +70,17 @@ function joinKelas_logGuru($pelaku, $id_kelas, $id_guru){
     $log_message = htmlspecialchars("$pelaku bergabung kedalam kelas anda, id kelas : $id_kelas", ENT_QUOTES, 'UTF-8');
     $stmt->execute([':id'=>$id_guru,':log' => $log_message]);
 }
+
+function komentarTugas_logGuru($pelaku, $id_tugas, $id_kelas){
+    include "koneksi.php";
+    $tugas_stmt = $pdo->prepare("SELECT * FROM guru_tugas WHERE id = :id");
+    $tugas_stmt->execute([':id'=>$id_tugas]);
+    $row = $tugas_stmt->fetch(PDO::FETCH_ASSOC);
+    
+    $query = "INSERT INTO teacher_log (id_guru, log) VALUES (:id, :log)";
+    $stmt = $pdo->prepare($query);
+
+    $log_message = htmlspecialchars("$pelaku berkomentar di tugas ".$row['judul'].", id kelas : $id_kelas", ENT_QUOTES, 'UTF-8');
+    $stmt->execute([':id'=>$row['id_guru'],':log' => $log_message]);
+}
 ?>
