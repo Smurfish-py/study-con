@@ -49,7 +49,7 @@ if (isset($_GET['action'])) {
             move_uploaded_file($file_tmp, $path.$nama_file_baru);
         }
         
-        $stmt = $pdo->prepare("INSERT INTO nilai_murid (id_murid, id_kelas, id_tugas, id_file, status) VALUES (:id_murid, :id_kelas, :id_tugas, :id_file, :status)");
+        $stmt = $pdo->prepare("INSERT INTO nilai_murid (id_murid, id_kelas, id_tugas, id_file, status, waktu) VALUES (:id_murid, :id_kelas, :id_tugas, :id_file, :status, NOW())");
         $stmt->execute([':id_murid'=>$id_pengguna, ':id_kelas'=>$id_kelas,
         ':id_tugas'=>$id_tugas, ':id_file'=>$id_file, ':status'=>'diserahkan']);
         header ("location: multifunction_page/success.php?message=Tugas%20berhasil%20dikirim%2E&link=user%2Fdefault%2Ftugas%2Ephp%3Fid%5Fkelas%3D$id_kelas%26id%3D$id_tugas&type=Kembali");
