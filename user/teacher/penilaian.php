@@ -87,7 +87,7 @@ if (!isset($_SESSION['id'])) {
                 ?>
                 <div class="tugas-komentar-section-body-header">
                     <h2 class="inter-600" style="margin: 0;"><?php echo $row['judul']?><br><span class="inter-400 font-size-l">Halaman penilaian dan komentar tugas</span></h2>
-                    <a href="kelas.php?id=<?php echo $id_kelas?>" class="inter-500 font-size-l" style="color: black; text-decoration: none;padding-right: 10px;">Kembali</a>
+                    <a href="kelas.php?id=<?php echo $id_kelas?>" class="inter-500 font-size-l" style="color: black; text-decoration: none;padding-right: 10px;">Kembali ke halaman kelas</a>
                 </div>
                 <hr style="margin: 0;">
                 <div class="tugas-penilaian-section-body">
@@ -178,12 +178,12 @@ if (!isset($_SESSION['id'])) {
                                 </div>
                             </div>
                             <div class="tugas-penilaian-nilai-section">
-                                <form action="" method="post" onsubmit="return confirm('Apakah anda yakin ingin submit? (Nilai bisa dirubah jika ada kesalahan)')">
+                                <form action="../../logika/penilaian_logic.php?id=<?php echo $_GET['id_user']?>&id_kelas=<?php echo $_GET['id_kelas']?>&id_tugas=<?php echo $_GET['id_tugas']?>" method="post" onsubmit="return confirm('Apakah anda yakin ingin submit? (Nilai bisa dirubah jika ada kesalahan)')">
                                     <div class="tugas-penilaian-nilai-section-header">
                                         <h3 class="inter-500" style="margin: 0;">Berikan komentar atau masukkan pribadi</h3>
                                         <div class="nilai">
                                             <label for="nilai-murid" class="inter-600">Beri nilai : </label>
-                                            <input class="inter-500" type="number" style="width: 50px; height: 20px;" name="nilai-murid" id="nilai-murid" value="<?php echo $detail_row['nilai']?>">
+                                            <input class="inter-500" type="number" style="width: 50px; height: 20px;" name="nilai-murid" id="nilai-murid" value="<?php echo $detail_row['nilai']?>" min="0" max="100">
                                         </div>
                                     </div>
                                     <div class="tugas-penilaian-nilai-section-body">
@@ -218,8 +218,8 @@ if (!isset($_SESSION['id'])) {
                     ?>
                     <h1 class="inter-600 font-size-header" style="margin: 0;">Komentar Tugas <span class="inter-400 font-size-l">(<a href="penilaian.php?id_tugas=<?php echo $_GET['id_tugas']?>&id_kelas=<?php echo $_GET['id_kelas']?>" style="text-decoration: none;">Kembali ke sesi penilaian</a>)</span><br><span class="inter-400 font-size-l"><?php ?></span></h1>
                     <hr style="margin: 0 0 3px 0;">
-                    <div class="tugas-komentar-section-list-komentar">
-                        <div class="tugas-komentar-section-list-komentar-section">
+                    <div class="tugas-komentar-section-list-komentar" >
+                        <div class="tugas-komentar-section-list-komentar-section" id="scroll-area">
                         <?php
                         while ($komentar = $stmt->fetch(PDO::FETCH_ASSOC)) {
                             ?>
@@ -247,8 +247,8 @@ if (!isset($_SESSION['id'])) {
                         </div>
                         <div class="tugas-komentar-section-kirim-komentar">
                             <hr style="margin: 3px;">
-                            <form action="" method="post" class="tugas-komentar-section-kirim-komentar-input">
-                                <input type="text" class="inter-400 font-size-l tugas-komentar-section-kirim-komentar-input-text" placeholder="Masukkan komentar anda disini...">
+                            <form action="../../logika/penilaian_logic.php?id_tugas=<?php echo $_GET['id_tugas']?>&id_kelas=<?php echo $_GET['id_kelas']?>&action=kirim_komentar" method="post" class="tugas-komentar-section-kirim-komentar-input">
+                                <input type="text" class="inter-400 font-size-l tugas-komentar-section-kirim-komentar-input-text" placeholder="Masukkan komentar anda disini..." name="isi">
                                 <button type="submit" class="tugas-komentar-section-kirim-komentar-submit"><i class="fa-solid fa-paper-plane font-size-xl"></i></button>
                             </form>
                         </div>
@@ -257,6 +257,10 @@ if (!isset($_SESSION['id'])) {
             </div>
         </div>
     </main>
+    <script>
+        const scrollArea = document.getElementById('scroll-area');
+        scrollArea.scrollTop = scrollArea.scrollHeight;
+    </script>
     <script src="../../assets/javascript/scripts.js"></script>
     <?php
     if (isset($_GET['action'])) {
@@ -270,8 +274,11 @@ if (!isset($_SESSION['id'])) {
                     if (penilaian.style.display != 'none') {
                         penilaian.style.display = 'none';
                         komentar.style.display = 'flex';
+                        const scrollArea = document.getElementById('scroll-area');
+                            scrollArea.scrollTop = scrollArea.scrollHeight;
                     }
                 });
+
             </script>
         <?php
         }
