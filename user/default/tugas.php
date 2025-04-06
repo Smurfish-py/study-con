@@ -86,6 +86,7 @@ if (!isset($_SESSION['id'])) {
         } else {
             $komentar_stmt = $pdo->prepare("INSERT INTO komentar_tugas (id_user, id_kelas, id_tugas, isi) VALUES (:id_user, :id_kelas, :id_tugas, :isi_komentar);");
             $komentar_stmt->execute([':id_user'=>$id_pengguna, 'id_kelas'=>$id_kelas, ':id_tugas'=>$id_tugas, ':isi_komentar'=>$isi_komentar]);
+            komentarTugas_logGuru($_SESSION['username'], $id_tugas, $id_kelas);
         }
     }
     ?>
@@ -97,7 +98,7 @@ if (!isset($_SESSION['id'])) {
                     <a href="kelas.php?id=<?php echo $_GET['id_kelas']?>" class="inter-400" style="text-decoration: none; color: black;">Kembali</a>
                 </div>
                 <hr style="border: 1px solid rgba(0, 0, 0, 1);">
-                <div class="tugas-isi-komentar">
+                <div class="tugas-isi-komentar" id="scroll-area">
                     <?php
                     $komentar_stmt = $pdo->prepare("SELECT * FROM komentar_tugas INNER JOIN user ON user.id = komentar_tugas.id_user WHERE id_kelas = :id_kelas AND id_tugas = :id_tugas");
                     $komentar_stmt->execute([':id_kelas'=>$_GET['id_kelas'], 'id_tugas'=>$_GET['id']]);
@@ -167,7 +168,8 @@ if (!isset($_SESSION['id'])) {
                             } else if ($nilai_row['status'] == 'diserahkan') {
                                 echo "<p class='inter-400'><b>Status :</b> <span style='color: orange;'>Menunggu penilaian</span></p>";
                             } else if ($nilai_row['status'] == 'dinilai') {
-                                echo "<p class='inter-400'><b>Nilai anda :</b> <span style='color: Green;'>"/$nilai_row['nilai']."</span></p>";
+                                echo "<p class='inter-600'><b>Nilai anda :</b> <span style='color: Green;'>".$nilai_row['nilai']."/100</span></p>";
+                                echo "<hr>";
                             }
                         }
                         ?>
@@ -184,7 +186,7 @@ if (!isset($_SESSION['id'])) {
                                 $parts = explode("_", $str);
                                 $nama_file_baru = $parts[2];
 
-                                echo "<a href='../../assets/documents/kelas/".$new_row['nama_file']."' download='$nama_file_baru' class='inter-500 font-size-l'>-> $nama_file_baru</a><br>";
+                                echo "<a href='../../assets/documents/kelas/".$new_row['nama_file']."' class='inter-500 font-size-l' target='_blank'>-> $nama_file_baru</a> (<a href='../../assets/documents/kelas/".$new_row['nama_file']."' download='$nama_file_baru' class='inter-500 font-size-l'>Download</a>)<br>";
                             }
                             ?>
                         </div>
@@ -232,7 +234,7 @@ if (!isset($_SESSION['id'])) {
                         </form>
                         <?php
                     } else if ($nilai_row['status'] == 'dinilai') {
-                        echo "<h2 class='inter-400 font-size-l'>Nilai Anda adalah : ".$nilai_row['nilai']."</h2>";
+                        
                     }
                 }
                     ?>
@@ -240,6 +242,10 @@ if (!isset($_SESSION['id'])) {
             </div>
         </div>
     </main>
+    <script>
+        const scrollArea = document.getElementById('scroll-area');
+        scrollArea.scrollTop = scrollArea.scrollHeight;
+    </script>
     <script src="../../assets/javascript/scripts.js"></script>
 </body>
 </html>
