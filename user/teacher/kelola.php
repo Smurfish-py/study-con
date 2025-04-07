@@ -102,7 +102,7 @@ if (!isset($_SESSION['id'])) {
                         </h2>
                     </div>
                     <div style="flex: 1; display: flex; align-items: center; justify-content: right; margin: 0 20px; height: 100%;">
-                        <a href="kelola_kelas.php" class="inter-400" style="text-decoration: none; color: white; position: absolute;">Kembali ke Halaman Kelola</a>
+                        <a href="kelas.php?id=<?php echo $_GET['id']?>" class="inter-400" style="text-decoration: none; color: white; position: absolute;">Kembali ke halaman kelas</a>
                     </div>
                 </div>
             </div>

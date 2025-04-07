@@ -114,7 +114,7 @@ if (!isset($_SESSION['id'])) {
                             <hr>
                             <h2 class="inter-400 font-size-xl" style="margin: 10px 0;"><span style="margin: 0 20px 0 50px;"><i class="fa-solid fa-users"></i></span><a href="kelas.php?action=anggota-kelas&id=<?php echo $idKelas?>" style="text-decoration: none; color: black;">Anggota Kelas</a></h2>
                             <hr>
-                            <h2 class="inter-400 font-size-xl" style="margin: 10px 0;"><span style="margin: 0 27px 0 50px;"><i class="fa-solid fa-check"></i></span><a href="" style="text-decoration: none; color: black;">Rekap Nilai</a></h2>
+                            <h2 class="inter-400 font-size-xl" style="margin: 10px 0;"><span style="margin: 0 27px 0 50px;"><i class="fa-solid fa-gear"></i></span><a href="kelola.php?id=<?php echo $_GET['id']?>" style="text-decoration: none; color: black;">Kelola</a></h2>
                             <hr>
                             <h2 class="inter-400 font-size-xl" style="margin: 10px 0;"><span style="margin: 0 20px 0 50px;"><i class="fa-solid fa-home"></i></span><a href="index.php" style="text-decoration: none; color: black;">Kembali ke Dashboard</a></h2>
                             <hr>
