@@ -795,6 +795,8 @@ input[type="number"] {
     background-position: center;
     position: relative;
     border-radius: 13px;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .header-class-admin {
