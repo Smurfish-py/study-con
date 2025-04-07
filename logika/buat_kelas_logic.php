@@ -24,7 +24,7 @@ if (isset($_POST)) {
     $path = "../assets/images/kelas/";
 
     if (!empty($header_kelas_file)) {
-        $sql = "INSERT INTO kelas (id, id_guru, nama_kelas, password, deskripsi_kelas, gambar_header_kelas, status_kelas) VALUES (:id, :id_guru, :nama_kelas, :password, :deskripsi_kelas, :gambar_header_kelas, :status_kelas)";
+        $sql = "INSERT INTO kelas (id, id_guru, nama_kelas, password, deskripsi_kelas, gambar_header_kelas, status_kelas, waktu_dibuat) VALUES (:id, :id_guru, :nama_kelas, :password, :deskripsi_kelas, :gambar_header_kelas, :status_kelas, NOW())";
 
         $stmt = $pdo->prepare($sql);
         $stmt->execute(['id'=>$id_kelas,'id_guru'=>$id_guru, 'nama_kelas'=>$nama_kelas, 'password'=>$password_kelas, 'deskripsi_kelas'=>$desc_kelas, 'gambar_header_kelas'=>$nama_header_baru, 'status_kelas'=>'active']);
@@ -35,7 +35,7 @@ if (isset($_POST)) {
 
         header("location: multifunction_page/success.php?message=Berhasil%20membuat%20kelas%20dengan%20nama%20$nama_kelas%2E&link=user%2Fteacher%2F&type=Kembali%20ke%20dashboard");
     } else {
-        $sql = "INSERT INTO kelas (id, id_guru, nama_kelas, password, deskripsi_kelas, status_kelas) VALUES (:id, :id_guru, :nama_kelas, :password, :deskripsi_kelas, :status_kelas)";
+        $sql = "INSERT INTO kelas (id, id_guru, nama_kelas, password, deskripsi_kelas, status_kelas, waktu_dibuat) VALUES (:id, :id_guru, :nama_kelas, :password, :deskripsi_kelas, :status_kelas, NOW())";
 
         $stmt = $pdo->prepare($sql);
         $stmt->execute(['id'=>$id_kelas,'id_guru'=>$id_guru, 'nama_kelas'=>$nama_kelas, 'password'=>$password_kelas, 'deskripsi_kelas'=>$desc_kelas, 'status_kelas'=>'active']);

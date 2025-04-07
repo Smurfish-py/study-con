@@ -81,7 +81,7 @@ if (!isset($_SESSION['id'])) {
                         <a href="buat_kelas.php"><i class="fa-solid fa-chalkboard-user fa-xl"></i> <span style="margin-left: 20px;">Buat Kelas</span></a>
                     </div>
                     <div class="sub-options inter-600">
-                        <a href=""><i class="fa-solid fa-gear fa-xl"></i> <span style="margin-left: 28px;">Kelola Kelas</span></a>
+                        <a href="kelola_kelas.php"><i class="fa-solid fa-gear fa-xl"></i> <span style="margin-left: 28px;">Kelola Kelas</span></a>
                     </div>
                 </div>
                 <div class="options" style="width: 390px; margin-top: 10px;">
