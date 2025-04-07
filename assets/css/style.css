@@ -569,6 +569,150 @@ body {
     border: 1px solid rgba(0, 0, 0, 0.4);
 }
 
+.kelola-kelas-container {
+    background-color: white;
+    height: 500px;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    width: 900px;
+    margin-top: 90px;
+    display: flex;
+    flex-direction: column;
+    padding: 0 20px;
+}
+
+.kelola-kelas-header {
+    flex: 0.4;
+}
+
+.kelola-kelas-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.kelola-kelas-body {
+    flex: 1.6;
+    display: flex;
+    flex-direction: column;
+}
+
+.kelola-kelas-input-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.kelola-kelas-body-left{
+    flex: 1;
+    padding: 20px 20px 10px 20px;
+}
+
+.kelola-kelas-body-right{
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    flex: 1;
+    padding: 20px 20px 10px 20px;
+}
+
+.kelola-kelas-list {
+    display: inline-block;
+    height: 100px;
+    object-fit: cover;
+    background-position: center;
+    position: relative;
+    border-radius: 13px;
+    border: none;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.kelola-kelas-list::before {
+    content: "";
+    position: absolute;
+    left: 50;
+    width: 900px;
+    height: 100px;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 13px;
+}
+
+.kelola-kelas-list-body {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.kelola-kelas-header-edit {
+    border-radius: 13px 13px 0 0;
+    flex: 0.5;
+    object-fit: cover;
+    background-position: center;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.kelola-kelas-header-edit::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 13px 13px 0 0;
+}
+
+.kelola-kelas-header-title {
+    width: 900px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+}
+
+.header-kelas-picture {
+    border: 1px solid;
+    width: 418px;
+    height: 40px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.header-kelas-picture:hover {
+    cursor: pointer;
+}
+
+.kelola-kelas-submit {
+    height: 40px;
+    width: 420px;
+    border-radius: 8px;
+    border: none;
+    background-color: black;
+    color: white;
+}
+
+.kelola-kelas-submit:hover {
+    cursor: pointer;
+}
+
+.kelola-kelas-list-pengguna {
+    height: 285px;
+    overflow-y: auto;
+}
+
+.kelola-kelas-list-anggota {
+    display: flex;
+    align-items: center;
+    height: 60px;
+    justify-content: space-between;
+}
+
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
     -webkit-appearance: none;
