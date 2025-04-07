@@ -106,7 +106,7 @@ if (!isset($_SESSION['id'])) {
                         <a href="list_pengguna.php"><i class="fa-solid fa-users fa-xl"></i> <span style="margin-left: 20px;">List Pengguna</span></a>
                     </div>
                     <div class="sub-options inter-600" >
-                        <a href="" style="background-color: #FEE9E7; color: #EC221F; border-color:rgb(236, 34, 31, 0.3);"><i class="fa-solid fa-user-xmark fa-xl"></i> <span style="margin-left: 20px;">Ban Pengguna</span></a>
+                        <a href="keluhan_pengguna.php"><i class="fa-solid fa-envelope-open-text fa-xl"></i> <span style="margin-left: 20px;">Keluhan / Laporan</span></a>
                     </div>
                 </div>
                 <div class="options" style="width: 370px; margin-top: 10px;">
