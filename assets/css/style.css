@@ -1281,6 +1281,15 @@ input[type="file"] {
     border-bottom: solid 3px;
 }
 
+.google-button {
+    border-radius: 10px;
+    border: 1   px solid black;
+    color: black;
+    background-color: transparent;
+    height: 40px;
+    width: 310px;
+}
+
 .submit-button {
     border-radius: 10px;
     color: white;
