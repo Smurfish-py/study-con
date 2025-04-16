@@ -12,7 +12,7 @@ Ini merupakan web pembelajaran berbasis Native `PHP`, `MySQL (MariaDB)` yang dik
 - **Database :** `MySQL (MariaDB)`
 - **Hosted on :** [Infinityfree.com](infinityfree.com)
 - **Website link (Preview, Desktop only) :** [sija.free.nf](sija.free.nf)
-- **Versi :** Alpha V5 - 16/03/2025, 07:47
+- **Versi :** Beta V3
 
 ## Struktur Folder
 - `root` merupakan folder dimana semua file project disimpan.
