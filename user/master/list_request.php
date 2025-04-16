@@ -128,11 +128,10 @@ if (!isset($_SESSION['id'])) {
             </div>
             <?php
             } 
-
             ?>
         </div>
     </div>
-    <main style="display: flex; align-items: center; justify-content: center; height: 85vh;">
+    <main style="display: flex; align-items: center; justify-content: center; height: 100vh;">
         <div class="inter-400 list-pengguna-container">
             <div class="inter-300" style="margin: 0; display: flex; justify-content: space-between; align-items: center;">
                 <h2 class="inter-500" >Daftar Request</h2>

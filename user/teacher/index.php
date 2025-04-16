@@ -72,16 +72,38 @@ if (!isset($_SESSION['id'])) {
             <a href="../../logika/logout.php" class='font-size-md' style='text-decoration: none; color: #C00F0C;'>Logout from this device</a>
         </div>
     </div>
-    <main class="inter-400" style="display: flex; align-items: center; justify-content: center;">
-        <!--Main Content (Say no to chatGPT-->
+    <main class="inter-400" style="display: flex; align-items: center; justify-content: center; padding-top: 70px;">
+        <!--Main Content (Say no to chatGPT)-->
         <div class="main-content">
             <div class="options-section">
                 <div class="options" style="margin-right: 10px;">
                     <div class="sub-options inter-600">
-                        <a href=""><i class="fa-solid fa-chalkboard-user fa-xl"></i> <span style="margin-left: 20px;">Buat Kelas</span></a>
+                        <a href="buat_kelas.php"><i class="fa-solid fa-chalkboard-user fa-xl"></i> <span style="margin-left: 20px;">Buat Kelas</span></a>
                     </div>
                     <div class="sub-options inter-600">
-                        <a href=""><i class="fa-solid fa-gear fa-xl"></i> <span style="margin-left: 28px;">Kelola Kelas</span></a>
+                        <a href="../keluhan.php"><i class="fa-solid fa-envelope fa-xl"></i> <span style="margin-left: 28px;">Keluhan dan Masukan</span></a>
+                    </div>
+                </div>
+                <div class="options" style="width: 390px; margin-top: 10px;">
+                    <div class="pengumuman">
+                        <div>
+                            <h3>Notifikasi</h3>
+                        </div>
+                        <hr>
+                        <div class="isi-pengumuman">
+                            <?php
+                            $stmt = $pdo->prepare("SELECT * FROM teacher_log WHERE id_guru = :id ORDER BY id DESC");
+                            $stmt->execute([':id'=>$_SESSION['id']]);
+                            
+                            if ($stmt->rowCount()>0) {
+                                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                                    echo "<p style='margin: 0;'><span style='color: #009DFF;'>[".$row['waktu']."]</span> ".$row['log']."</p>";
+                                }
+                            } else {
+                                echo "Belum ada kegiatan :)";
+                            }
+                            ?>
+                        </div>
                     </div>
                 </div>
                 <div class="options">
@@ -105,27 +127,36 @@ if (!isset($_SESSION['id'])) {
                         </div>
                     </div>
                 </div>
-                <div class="options" style="width: 390px; margin-top: 10px;">
-                    <div class="pengumuman">
-                        <div>
-                            <h3>Notifikasi</h3>
-                        </div>
-                        <hr>
-                        <div class="isi-pengumuman">
-                            <?php
-                            
-                            ?>
-                        </div>
-                    </div>
-                </div>
             </div>
             <br>
             <div class="log-section">
                 <div class="log-side" style="width: 1258px; border-radius: 18px;">
                     <h2>Kelas Anda</h2>
                     <hr>
-                    <div style="overflow-y: auto; height: 190px; margin: 10px 30px 0 50px;">
-                        
+                    <div style="overflow-y: auto; height: fit-content; margin: 10px 50px 30px 50px;">
+                        <?php
+                        $stmt = $pdo->prepare("SELECT * FROM kelas WHERE id_guru=:id_guru");
+                        $stmt->execute(['id_guru'=>$_SESSION['id']]);
+                        $path = "../../assets/images/kelas/";
+                        if ($stmt->rowCount()>0) {
+                            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+                                echo "<a href='kelas.php?id=".$row['id']."' style='border-radius: 8px'>";
+                                echo "<div style='display: flex; align-items: center; height: 100px; position: relative; border-radius: 8px'>";
+                                if (file_exists($path.$row['gambar_header_kelas']) == false || $row['gambar_header_kelas'] == '') {
+                                    echo "<img src='".$path."default.jpg' style='width: 100%; object-fit: cover; height: 100px; filter: brightness(50%); border-radius: 8px'>";
+                                } else {
+                                    echo "<img src='".$path.$row['gambar_header_kelas']."' style='width: 100%; object-fit: cover; height: 100px; filter: brightness(50%); border-radius: 8px'>";
+                                }
+                                
+                                echo "<h3 class='inter-500' style='margin-left: 30px; position: absolute; top: 0; color: white; '>".$row['nama_kelas']."<br><span class='inter-300'>ID Kelas : ".$row['id']."</span></h3>";
+                                echo "</div>";
+                                echo "</a>";
+                                echo "<hr style='margin: 5px;'>";
+                            }
+                        } else {
+                            echo "<p>Belum ada kelas :(<br> Buat kelas dan terhubung dengan murid Anda di mana saja dan kapan saja!</p>";
+                        }
+                        ?>
                     </div>
                 </div>
             </div>

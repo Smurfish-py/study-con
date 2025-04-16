@@ -89,7 +89,7 @@ if (!isset($_SESSION['id'])) {
             
          </div>
     </div>
-    <main class="inter-400" style="display: flex; align-items: center; justify-content: center;">
+    <main class="inter-400" style="display: flex; align-items: center; justify-content: center; padding-top: 90px;">
         <!--Main Content (Say no to chatGPT-->
         <div class="main-content">
             <div class="options-section">
@@ -98,7 +98,7 @@ if (!isset($_SESSION['id'])) {
                         <a href="list_request.php"><i class="fa-solid fa-user-plus fa-xl"></i> <span style="margin-left: 20px;">Daftar Request</span></a>
                     </div>
                     <div class="sub-options inter-600">
-                        <a href=""><i class="fa-solid fa-list fa-xl"></i> <span style="margin-left: 28px;">List Kelas</span></a>
+                        <a href="list_kelas.php"><i class="fa-solid fa-list fa-xl"></i> <span style="margin-left: 28px;">List Kelas</span></a>
                     </div>
                 </div>
                 <div class="options">
@@ -106,10 +106,10 @@ if (!isset($_SESSION['id'])) {
                         <a href="list_pengguna.php"><i class="fa-solid fa-users fa-xl"></i> <span style="margin-left: 20px;">List Pengguna</span></a>
                     </div>
                     <div class="sub-options inter-600" >
-                        <a href="" style="background-color: #FEE9E7; color: #EC221F; border-color:rgb(236, 34, 31, 0.3);"><i class="fa-solid fa-user-xmark fa-xl"></i> <span style="margin-left: 20px;">Ban Pengguna</span></a>
+                        <a href="keluhan_pengguna.php"><i class="fa-solid fa-envelope-open-text fa-xl"></i> <span style="margin-left: 20px;">Keluhan / Laporan</span></a>
                     </div>
                 </div>
-                <div class="options" style="width: 373px; margin-top: 10px;">
+                <div class="options" style="width: 370px; margin-top: 10px;">
                     <div class="pengumuman">
                         <div>
                             <h3>Pengumuman</h3>
@@ -141,7 +141,7 @@ if (!isset($_SESSION['id'])) {
                 <div class="log-side">
                     <h2>Website Log</h2>
                     <hr>
-                    <div style="overflow-y: auto; height: 190px; margin: 10px 30px 0 50px;">
+                    <div style="overflow-y: auto; height: 228px; margin: 10px 30px 0 50px;">
                         <?php
                         $query = "SELECT * FROM website_log ORDER BY id DESC";
                         $hasil = $pdo->query($query);
@@ -156,8 +156,7 @@ if (!isset($_SESSION['id'])) {
                     </div>
                 </div>
                 <div class="gray-side">
-                    <h2 class="inter-400">Ver. 6:14.16.03.2025 <br> Tahap : Pre-alphaV4 <br><br> <a href="../../assets/development/" style="text-decoration: none; color: white;" class="font-size-xl"><i class="fa-solid fa-code"></i> Development Log</a></h2>
-                    
+                    <h2 class="inter-400">Ver. 9:07.06.04.2025 <br> Tahap : BetaV2 <br><br> <a href="../../assets/development/" style="text-decoration: none; color: white;" class="font-size-xl"></h2>
                 </div>
             </div>
         </div>

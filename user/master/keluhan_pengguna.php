@@ -6,7 +6,7 @@ include "../../logika/koneksi.php";
 if (!isset($_SESSION['id'])) {
     header("Location: ../../login.php");
     exit();
-} else if ($_SESSION['status-akun'] == 'banned') {
+} else if ($_SESSION['status'] != 'master' || $_SESSION['status-akun'] == 'banned') {
     session_destroy();
     header("Location: ../../");
 }
@@ -48,7 +48,7 @@ if (!isset($_SESSION['id'])) {
             <i class="fa-solid fa-address-card fa-2xl"></i>
         </a>
     </header>
-    <div class="inter-400 user-card" id="user-card" style="display: none; justify-content: center; ">
+    <div class="inter-400 user-card" id="user-card" style="display: none; justify-content: center; align-items">
         <p class="inter-500 font-size-l">Profile Card<br><span class="inter-200 font-size-md"><?php echo $_SESSION['username'];?></span></p>
         <hr>
         <br>
@@ -72,55 +72,43 @@ if (!isset($_SESSION['id'])) {
             <a href="../../logika/logout.php" class='font-size-md' style='text-decoration: none; color: #C00F0C;'>Logout from this device</a>
         </div>
     </div>
-    <main class="inter-400" style="display: flex; align-items: center; justify-content: center; padding-top: 90px;">
-        <div class="main-content" style="width: 100%;">
-            <div style="width: 100%; display: flex; justify-content: space-between; align-items: center;">
-                <h2>Joined Class</h2>
-                <form action="../../logika/join_kelas_logic.php?action=join" method="post">
-                    <span>
-                        <label class="inter-600 font-size-l" for="join-kelas">Join ke kelas</label> <br>
-                        <input class="inter-400 input-kelas font-size-l" type="number" style="width: 300px; height: 35px; border-right: 1px solid rgba(0, 0, 0, 0.4);" placeholder="Masukan kode kelas, contoh: 12345" id="join-kelas" name="join-kelas">
-                    </span>
-                    <button type="submit" style=" color: rgba(0, 0, 0, 0.6); height: 40px; width: 40px; background-color: #45474B; border-radius: 7px; color: white;"><i class="fa-solid fa-arrow-right-to-bracket fa-xl"></i></button>
-                </form>
+    <main style="display: flex; align-items: center; justify-content: center; height: 99vh; border: solid;">
+        <div class="masukan-pengguna-container">
+            <div class="masukan-pengguna-header">
+                <div class="masukan-pengguna-header-title">
+                    <h2 class="inter-600">Kotak Masuk<br><span class="inter-700 font-size-l" style="color: orange;">(Semua keluhan, laporan, dan masukan dikumpulkan disini)</span></h2>
+                    <a href="index.php" class="inter-400 font-size-l" style="text-decoration: none; color: #009DFF;">Kembali ke dashboard</a>
+                </div>
+                <hr>
             </div>
-            <hr>
-            <div class="class-list">
-            <?php
-            try {
-                $stmt = $pdo->prepare("SELECT * FROM kelas JOIN anggota_kelas ON kelas.id = anggota_kelas.id_kelas WHERE anggota_kelas.id_murid = :id");
-                $stmt->execute(['id'=>$_SESSION['id']]);
+            <div class="masukan-pengguna-body">
+                <?php
+                $stmt = $pdo->prepare("SELECT * FROM masukan ORDER BY id DESC");
+                $stmt->execute();
+                
                 if ($stmt->rowCount()>0) {
                     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                         ?>
-                        <a href="kelas.php?id=<?php echo $row['id_kelas']?>" class="class-list-header" style="position: relative; display: inline-block; background-color: white; height: 350px; width: 300px; border: 1px solid rgba(0, 0, 0, 0.4); border-radius: 13px; background-image: url(../../assets/images/kelas/<?php 
-                        if ($row['gambar_header_kelas'] == '') {
-                            echo "default.jpg";
-                        } else {
-                            echo $row['gambar_header_kelas'];
-                        }
-    
-                        ?>); background-repeat: no-repeat; background-size: cover; background-position: center;">
-                            <div style="height: 95%; width: 85%; display: flex; justify-content: end; margin: 0 15px; overflow-y: auto; position: absolute; flex-direction: column;">
-                                <h2 class="inter-600 font-size-xl" style="color: white;"><?php echo $row['nama_kelas']?></h2>
-                                <p class="deskripsi-kelas" style="color: white; display: inline-block; height: 50px; overflow-y: auto; background-color: transparent; padding: 10px 0;"><?php echo $row['deskripsi_kelas']?></p>
+                            <div style="border: 1px solid rgba(0, 0, 0, 0.3);">
+                                <h3 class="inter-600" style="margin: 10px 20px 0 20px;">Pengirim : <span class="inter-400"><?php echo $row['pengirim']?></span><br>Tipe : <?php
+                                if ($row['tipe'] == 'pesan') {
+                                    echo "<span style='color: orange;'>Pesan</span>";
+                                } else if ($row['tipe'] == 'keluhan') {
+                                    echo "<span style='color: red;'>Keluhan</span>";
+                                } else if ($row['tipe'] == 'saran') {
+                                    echo "<span style='color: green;'>Saran</span>";
+                                }
+                                
+                                ?></h3>
+                                <p class="inter-400" style="margin: 10px 20px;"><?php echo $row['isi']?></p>
                             </div>
-                            
-                        </a>
-                        <?php
+                    <?php
                     }
                 } else {
-                    echo "Anda belum mengikuti kelas manapun :( <br> Minta pengajar anda untuk membagikan id kelas beserta passwordnya (Jika ada), kemudian bergabung ke kelas untuk terhubung dimana saja dan kapan saja :D";
+                    echo "<p class='inter-400' style='text-align: center;'>Belum ada keluhan ataupun masukan :)</p>";
                 }
-            } catch (PDOException $e) {
-                echo $e->getMessage();
-            } finally {
-                $pdo = null;
-            }
-            
-            ?>
+                ?>
             </div>
-            <hr>
 
         </div>
     </main>

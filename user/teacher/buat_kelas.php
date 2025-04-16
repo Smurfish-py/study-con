@@ -6,7 +6,7 @@ include "../../logika/koneksi.php";
 if (!isset($_SESSION['id'])) {
     header("Location: ../../login.php");
     exit();
-} else if ($_SESSION['status-akun'] == 'banned') {
+} else if ($_SESSION['status'] != 'teacher' || $_SESSION['status-akun'] == 'banned') {
     session_destroy();
     header("Location: ../../");
 }
@@ -72,56 +72,34 @@ if (!isset($_SESSION['id'])) {
             <a href="../../logika/logout.php" class='font-size-md' style='text-decoration: none; color: #C00F0C;'>Logout from this device</a>
         </div>
     </div>
-    <main class="inter-400" style="display: flex; align-items: center; justify-content: center; padding-top: 90px;">
-        <div class="main-content" style="width: 100%;">
-            <div style="width: 100%; display: flex; justify-content: space-between; align-items: center;">
-                <h2>Joined Class</h2>
-                <form action="../../logika/join_kelas_logic.php?action=join" method="post">
-                    <span>
-                        <label class="inter-600 font-size-l" for="join-kelas">Join ke kelas</label> <br>
-                        <input class="inter-400 input-kelas font-size-l" type="number" style="width: 300px; height: 35px; border-right: 1px solid rgba(0, 0, 0, 0.4);" placeholder="Masukan kode kelas, contoh: 12345" id="join-kelas" name="join-kelas">
-                    </span>
-                    <button type="submit" style=" color: rgba(0, 0, 0, 0.6); height: 40px; width: 40px; background-color: #45474B; border-radius: 7px; color: white;"><i class="fa-solid fa-arrow-right-to-bracket fa-xl"></i></button>
+    <main class="inter-400" style="padding-top: 90px;">
+        <div class="buat-kelas-container">
+            <div class="left-side" style="display: flex; align-items: center; height: 80vh; flex: 1;">
+                <h1 class="inter-600" style="margin: 0 0 0 100px;">Buat kelas,<br>dan terhubung<br>dengan murid anda!</h1>
+            </div>
+            <div class="form-side" style="display: flex;justify-content: center; align-items: center; height: 80vh; flex: 1;">
+                <form action="../../logika/buat_kelas_logic.php" method="post" style="display: flex; gap: 10px; flex-direction: column;" enctype="multipart/form-data">
+                    <div>
+                        <label class="inter-600" for="nama-kelas">Nama kelas</label><br>
+                        <input class="inter-400 input-kelas" type="text" name="nama-kelas" id="nama-kelas" placeholder="Masukkan nama kelas anda..." required> 
+                    </div>
+                    <div>
+                        <label class="inter-600" for="password-kelas">Password (Opsional)</label><br>
+                        <input class="inter-400 input-kelas" type="password" name="password-kelas" id="password-kelas" placeholder="Masukkan password untuk kelas anda..."> 
+                    </div>
+                    <div>
+                       <label class="inter-600" for="deskripsi-kelas">Keterangan kelas</label><br>
+                       <textarea class="inter-400 deskripsi-kelas" name="deskripsi-kelas" id="deskripsi-kelas" placeholder="Masukkan deskripsi untuk kelas anda.." style="width: 505px; height: 130px;" required></textarea>
+                    </div>
+                    <div>
+                        <p class="inter-600" style="margin: 0;">Foto header kelas (Opsional)</p>
+                        <label class="inter-400 btn-pfp" for="header-kelas" style="color: black; width: 500px; text-align: center; border: 1px solid rgba(0, 0, 0, 0.5); border-radius: 7px; padding: 10px:">Klik disini untuk upload <i class="fa-solid fa-image"></i></label>
+
+                        <input type="file" name="header-kelas" accept=".jpg, .png, image/jpeg, image/png" id="header-kelas">
+                    </div>
+                    <input type="submit" value="Buat kelas" class="inter-600 submit-kelas">
                 </form>
             </div>
-            <hr>
-            <div class="class-list">
-            <?php
-            try {
-                $stmt = $pdo->prepare("SELECT * FROM kelas JOIN anggota_kelas ON kelas.id = anggota_kelas.id_kelas WHERE anggota_kelas.id_murid = :id");
-                $stmt->execute(['id'=>$_SESSION['id']]);
-                if ($stmt->rowCount()>0) {
-                    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                        ?>
-                        <a href="kelas.php?id=<?php echo $row['id_kelas']?>" class="class-list-header" style="position: relative; display: inline-block; background-color: white; height: 350px; width: 300px; border: 1px solid rgba(0, 0, 0, 0.4); border-radius: 13px; background-image: url(../../assets/images/kelas/<?php 
-                        if ($row['gambar_header_kelas'] == '') {
-                            echo "default.jpg";
-                        } else {
-                            echo $row['gambar_header_kelas'];
-                        }
-    
-                        ?>); background-repeat: no-repeat; background-size: cover; background-position: center;">
-                            <div style="height: 95%; width: 85%; display: flex; justify-content: end; margin: 0 15px; overflow-y: auto; position: absolute; flex-direction: column;">
-                                <h2 class="inter-600 font-size-xl" style="color: white;"><?php echo $row['nama_kelas']?></h2>
-                                <p class="deskripsi-kelas" style="color: white; display: inline-block; height: 50px; overflow-y: auto; background-color: transparent; padding: 10px 0;"><?php echo $row['deskripsi_kelas']?></p>
-                            </div>
-                            
-                        </a>
-                        <?php
-                    }
-                } else {
-                    echo "Anda belum mengikuti kelas manapun :( <br> Minta pengajar anda untuk membagikan id kelas beserta passwordnya (Jika ada), kemudian bergabung ke kelas untuk terhubung dimana saja dan kapan saja :D";
-                }
-            } catch (PDOException $e) {
-                echo $e->getMessage();
-            } finally {
-                $pdo = null;
-            }
-            
-            ?>
-            </div>
-            <hr>
-
         </div>
     </main>
     <script src="../../assets/javascript/scripts.js"></script>

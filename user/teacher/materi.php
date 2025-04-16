@@ -6,7 +6,7 @@ include "../../logika/koneksi.php";
 if (!isset($_SESSION['id'])) {
     header("Location: ../../login.php");
     exit();
-} else if ($_SESSION['status-akun'] == 'banned') {
+} else if ($_SESSION['status'] != 'teacher' || $_SESSION['status-akun'] == 'banned') {
     session_destroy();
     header("Location: ../../");
 }
@@ -72,58 +72,67 @@ if (!isset($_SESSION['id'])) {
             <a href="../../logika/logout.php" class='font-size-md' style='text-decoration: none; color: #C00F0C;'>Logout from this device</a>
         </div>
     </div>
-    <main class="inter-400" style="display: flex; align-items: center; justify-content: center; padding-top: 90px;">
-        <div class="main-content" style="width: 100%;">
-            <div style="width: 100%; display: flex; justify-content: space-between; align-items: center;">
-                <h2>Joined Class</h2>
-                <form action="../../logika/join_kelas_logic.php?action=join" method="post">
-                    <span>
-                        <label class="inter-600 font-size-l" for="join-kelas">Join ke kelas</label> <br>
-                        <input class="inter-400 input-kelas font-size-l" type="number" style="width: 300px; height: 35px; border-right: 1px solid rgba(0, 0, 0, 0.4);" placeholder="Masukan kode kelas, contoh: 12345" id="join-kelas" name="join-kelas">
-                    </span>
-                    <button type="submit" style=" color: rgba(0, 0, 0, 0.6); height: 40px; width: 40px; background-color: #45474B; border-radius: 7px; color: white;"><i class="fa-solid fa-arrow-right-to-bracket fa-xl"></i></button>
-                </form>
-            </div>
-            <hr>
-            <div class="class-list">
+    <main style="height: 99.5vh; display: flex; justify-content: center;">
+        <div class="tugas-nilai-container">
             <?php
-            try {
-                $stmt = $pdo->prepare("SELECT * FROM kelas JOIN anggota_kelas ON kelas.id = anggota_kelas.id_kelas WHERE anggota_kelas.id_murid = :id");
-                $stmt->execute(['id'=>$_SESSION['id']]);
-                if ($stmt->rowCount()>0) {
-                    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                        ?>
-                        <a href="kelas.php?id=<?php echo $row['id_kelas']?>" class="class-list-header" style="position: relative; display: inline-block; background-color: white; height: 350px; width: 300px; border: 1px solid rgba(0, 0, 0, 0.4); border-radius: 13px; background-image: url(../../assets/images/kelas/<?php 
-                        if ($row['gambar_header_kelas'] == '') {
-                            echo "default.jpg";
-                        } else {
-                            echo $row['gambar_header_kelas'];
-                        }
-    
-                        ?>); background-repeat: no-repeat; background-size: cover; background-position: center;">
-                            <div style="height: 95%; width: 85%; display: flex; justify-content: end; margin: 0 15px; overflow-y: auto; position: absolute; flex-direction: column;">
-                                <h2 class="inter-600 font-size-xl" style="color: white;"><?php echo $row['nama_kelas']?></h2>
-                                <p class="deskripsi-kelas" style="color: white; display: inline-block; height: 50px; overflow-y: auto; background-color: transparent; padding: 10px 0;"><?php echo $row['deskripsi_kelas']?></p>
-                            </div>
-                            
-                        </a>
-                        <?php
-                    }
-                } else {
-                    echo "Anda belum mengikuti kelas manapun :( <br> Minta pengajar anda untuk membagikan id kelas beserta passwordnya (Jika ada), kemudian bergabung ke kelas untuk terhubung dimana saja dan kapan saja :D";
-                }
-            } catch (PDOException $e) {
-                echo $e->getMessage();
-            } finally {
-                $pdo = null;
-            }
-            
+            $id_tugas = $_GET['id_tugas'];
+            $id_kelas = $_GET['id_kelas'];
             ?>
-            </div>
-            <hr>
+            <div class="tugas-komentar-section" id="tugas-komentar-section">
+                <div class="tugas-komentar-section-body">
+                    <?php
+                    $id_kelas = $_GET['id_kelas'];
+                    $id_tugas = $_GET['id_tugas'];
 
+                    $stmt = $pdo->prepare("SELECT * FROM user JOIN komentar_tugas ON komentar_tugas.id_user = user.id WHERE komentar_tugas.id_tugas = :id_tugas AND komentar_tugas.id_kelas = :id_kelas");
+                    
+                    $stmt->execute([':id_tugas'=>$id_tugas, ':id_kelas'=>$id_kelas]);
+                    ?>
+                    <h1 class="inter-600 font-size-header" style="margin: 0;">Komentar Tugas <span class="inter-400 font-size-l">(<a href="kelas.php?id=<?php echo $_GET['id_kelas']?>" style="text-decoration: none;">Kembali ke halaman kelas</a>)</span><br><span class="inter-400 font-size-l"><?php ?></span></h1>
+                    <hr style="margin: 0 0 3px 0;">
+                    <div class="tugas-komentar-section-list-komentar" >
+                        <div class="tugas-komentar-section-list-komentar-section" id="scroll-area">
+                        <?php
+                        while ($komentar = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                            ?>
+                            <div class="tugas-komentar-section-komentar-user">
+                                <?php
+                                if ($komentar['foto_profil'] == '') {
+                                    echo "<i class='fa-solid fa-circle-user' style='font-size: 40px;'></i>";
+                                } else {
+                                    echo "<img src='../../assets/images/user/".$komentar['foto_profil']."' style='height: 40px; width: 40px; object-fit: cover; border-radius: 100px; border: 1px solid rgba(0, 0, 0, 0.3);'>";
+                                }
+
+                                ?>
+                                <h3 class="inter-600" style="margin-left: 15px;"><?php
+                                if ($komentar['status'] == 'teacher') {
+                                    echo $komentar['username']."<span class='inter-500 font-size-l' style='color: red;'> (Guru)</span>";
+                                } else {
+                                    echo $komentar['username'];
+                                }
+                                ?><br><span class="inter-400 font-size-l"><?php echo $komentar['isi']?></span></h3>
+                            </div>
+                            <hr style="margin: 0px;">
+                            <?php
+                        }
+                        ?>
+                        </div>
+                        <div class="tugas-komentar-section-kirim-komentar">
+                            <hr style="margin: 3px;">
+                            <form action="../../logika/penilaian_logic.php?id_tugas=<?php echo $_GET['id_tugas']?>&id_kelas=<?php echo $_GET['id_kelas']?>&action=kirim_komentar" method="post" class="tugas-komentar-section-kirim-komentar-input">
+                                <input type="text" class="inter-400 font-size-l tugas-komentar-section-kirim-komentar-input-text" placeholder="Masukkan komentar anda disini..." name="isi">
+                                <button type="submit" class="tugas-komentar-section-kirim-komentar-submit"><i class="fa-solid fa-paper-plane font-size-xl"></i></button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </main>
+    <script>
+        const scrollArea = document.getElementById('scroll-area');
+        scrollArea.scrollTop = scrollArea.scrollHeight;
+    </script>
     <script src="../../assets/javascript/scripts.js"></script>
 </body>
 </html>
