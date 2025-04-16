@@ -1283,11 +1283,10 @@ input[type="file"] {
 
 .google-button {
     border-radius: 10px;
-    border: 1   px solid black;
     color: black;
     background-color: transparent;
-    height: 40px;
-    width: 310px;
+    display: inline-block;
+    margin-left: 10px;
 }
 
 .submit-button {

@@ -26,7 +26,14 @@
                     <input class="inter-400 input-text" type="password" id="re-type" name="re-type" style="margin-bottom: 25px;" placeholder="admin#1234" required>
 
                     <div class="submit-area" style="max-width: 310px;">
-                        <button class="inter-700 font-size-l submit-button" style="display: inline-block; border: none;" type="submit">REGISTER</button>
+                        <div style="display: flex; gap: 10px;">
+                            <button class="inter-700 font-size-l submit-button" style="display: inline-block; border: none; flex: 1;" type="submit">REGISTER</button>
+                            <div style="display: flex; flex: 1; align-items: center; justify-content: center; gap: 10px; border: 2px solid black; padding-left: 8px; border-radius: 8px;">
+                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTd7YDW4zLa_XjVZewhUPT6UdhdvScrAbvXGLy3ZIJHVqcT7JYtemSdQRhYyiQto6USWxDXW1rIi5MolUO5gNsFAMX0LZqbRNibdGMZX2g" alt="" srcset="" style="height: 20px; width: 20px; object-fit: cover;">
+                                <a class="inter-700 font-size-md" class="inter-700 font-size-l submit-button" style="display: inline-block; border: none; flex: 1;" type="submit">REGISTER WITH GOOGLE</a> 
+                            </div>
+                            
+                        </div>
                         <p class="inter-400 font-size-md" style="text-align: center;">Sudah punya akun? Klik <a class="inter-900" href="login.php" style="text-decoration: none; color: black;">di sini</a> untuk login!</p>
                     </div>
                 </form>

@@ -11,7 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
     if ($password != $reType || $reType != $password){
         header("location: multifunction_page/error.php?message=Password%20%26%20Re%2Dtype%20password%20tidak%20sama%2E&link=login%2Ephp&type=Login%20page");
     } else {
-        $query = "INSERT INTO user (email, username, password, status, status_akun) VALUES ('$email', '$username', '$password', 'default', 'active')";
+        $query = "INSERT INTO user (email, tipe_akun, username, password, status, status_akun) VALUES ('$email', 'default', '$username', '$password', 'default', 'active')";
 
         $stmt = $pdo->prepare('SELECT * FROM user WHERE email = :email');
         $stmt->execute(['email'=>$email]);
