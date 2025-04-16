@@ -19,7 +19,7 @@ include "../logika/koneksi.php";
         <div class="form-container">
             <h2 style="text-align: center;">Form Masukan dan Keluhan<br><span class="inter-400 font-size-l">Silahkan keluhkan masalah atau masukan anda di halaman ini. <br> Gunakan bahasa yang baik dan sopan.</span></h2>
             <hr>
-            <h4 class="inter-400">Pilih tipe masukan (Pilih salah satu)</h4>
+            <h4 class="inter-400">Tipe laporan (Pilih salah satu)</h4>
             <input type="radio" name="pilihan" id="pesan" value="pesan" required>
             <label for="pesan">Pesan</label>
 
