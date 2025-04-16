@@ -76,7 +76,7 @@ if (!isset($_SESSION['id'])) {
         <div class="masukan-pengguna-container">
             <div class="masukan-pengguna-header">
                 <div class="masukan-pengguna-header-title">
-                    <h2 class="inter-600">Kotak Masuk<br><span class="inter-700 font-size-l" style="color: orange;">(Semua keluhan, laporan, dan masukan dikumpulkan disini)</span></h2>
+                    <h2 class="inter-600">Kotak Masuk<br><span class="inter-500 font-size-l" style="color: orange;">(Semua keluhan, laporan, dan masukan dikumpulkan disini)</span></h2>
                     <a href="index.php" class="inter-400 font-size-l" style="text-decoration: none; color: #009DFF;">Kembali ke dashboard</a>
                 </div>
                 <hr>
