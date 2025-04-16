@@ -1,3 +1,16 @@
+<?php
+require_once 'vendor/autoload.php';
+
+$client = new Google_Client();
+$client->setClientId('804773744896-eo2omb1dn7u8q035ms1pbgkim3k8h7v0.apps.googleusercontent.com');
+$client->setClientSecret('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');
+$client->setRedirectUri('http://localhost/StudyCon/logika/google-login/callback.php');
+$client->addScope('email');
+$client->addScope('profile');
+
+$login_url = $client->createAuthUrl();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -30,7 +43,7 @@
                             <button class="inter-700 font-size-l submit-button" style="display: inline-block; border: none; flex: 1;" type="submit">REGISTER</button>
                             <div style="display: flex; flex: 1; align-items: center; justify-content: center; gap: 10px; border: 2px solid black; padding-left: 8px; border-radius: 8px;">
                                 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTd7YDW4zLa_XjVZewhUPT6UdhdvScrAbvXGLy3ZIJHVqcT7JYtemSdQRhYyiQto6USWxDXW1rIi5MolUO5gNsFAMX0LZqbRNibdGMZX2g" alt="" srcset="" style="height: 20px; width: 20px; object-fit: cover;">
-                                <a class="inter-700 font-size-md" class="inter-700 font-size-l submit-button" style="display: inline-block; border: none; flex: 1;" type="submit">REGISTER WITH GOOGLE</a> 
+                                <a href="<?php echo $login_url?>" class="inter-700 font-size-md" class="inter-700 font-size-l submit-button" style="display: inline-block; border: none; flex: 1; color: black;" type="submit">REGISTER WITH GOOGLE</a> 
                             </div>
                             
                         </div>
