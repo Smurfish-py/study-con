@@ -2,16 +2,16 @@
 session_start();
 
 include "../../logika/koneksi.php";
+include "../../logika/custom_function.php";
 
 if (!isset($_SESSION['id'])) {
     header("Location: ../../login.php");
     exit();
-} else if ($_SESSION['status'] != 'teacher' || $_SESSION['status-akun'] == 'banned') {
+} else if ($_SESSION['status'] != 'master' || $_SESSION['status-akun'] == 'banned') {
     session_destroy();
     header("Location: ../../");
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -72,35 +72,31 @@ if (!isset($_SESSION['id'])) {
             <a href="../../logika/logout.php" class='font-size-md' style='text-decoration: none; color: #C00F0C;'>Logout from this device</a>
         </div>
     </div>
-    <main class="inter-400" style="padding-top: 90px;">
-        <div class="buat-kelas-container">
-            <div class="left-side" style="display: flex; align-items: center; height: 80vh; flex: 1;">
-                <h1 class="inter-600" style="margin: 0 0 0 100px;">Buat kelas,<br>dan terhubung<br>dengan murid anda!</h1>
+    <main class="inter-400" style="display: flex; align-items: center; justify-content: center; height: 100vh;">
+        <div class="list-pengguna-container" style="overflow-y: unset;">
+            <div class="list-pengumuman-header-title">
+               <h2 class="inter-600">List Pengumuman</h2> 
+               <a href="index.php" class="inter-400" style="color: #009DFF; text-decoration: none;">Kembali ke dashboard</a>
             </div>
-            <div class="form-side" style="display: flex;justify-content: center; align-items: center; height: 80vh; flex: 1;">
-                <form action="../../logika/buat_kelas_logic.php" method="post" style="display: flex; gap: 10px; flex-direction: column;" enctype="multipart/form-data">
-                    <div>
-                        <label class="inter-600" for="nama-kelas">Nama kelas</label><br>
-                        <input class="inter-400 input-kelas" type="text" name="nama-kelas" id="nama-kelas" placeholder="Masukkan nama kelas anda..." required> 
-                    </div>
-                    <div>
-                        <label class="inter-600" for="password-kelas">Password (Opsional)</label><br>
-                        <input class="inter-400 input-kelas" type="password" name="password-kelas" id="password-kelas" placeholder="Masukkan password untuk kelas anda..."> 
-                    </div>
-                    <div>
-                       <label class="inter-600" for="deskripsi-kelas">Keterangan kelas</label><br>
-                       <textarea class="inter-400 deskripsi-kelas" name="deskripsi-kelas" id="deskripsi-kelas" placeholder="Masukkan deskripsi untuk kelas anda.." style="width: 505px; height: 130px;" required></textarea>
-                    </div>
-                    <div>
-                        <p class="inter-600" style="margin: 0;">Foto header kelas (Opsional)</p>
-                        <label class="inter-400 btn-pfp" for="header-kelas" style="color: black; width: 500px; text-align: center; border: 1px solid rgba(0, 0, 0, 0.5); border-radius: 7px; padding: 10px:">Klik disini untuk upload <i class="fa-solid fa-image"></i></label>
+            <hr>
+            <div class="list-pengumuman-body">
+                <?php
+                $stmt = $pdo->prepare("SELECT * FROM pengumuman ORDER BY waktu DESC");
+                $stmt->execute();
 
-                        <input type="file" name="header-kelas" accept=".jpg, .png, image/jpeg, image/png" id="header-kelas">
+                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                    ?>
+                    <div class="pengumuman-isi">
+                        <p class="inter-400"><b>Penulis: </b><?php echo $row['penulis']?></p>
+                        <p class="inter-400"><b>Waktu dibuat : </b><?php echo $row['waktu']?></p>
+                        <p class="inter-400" style="margin-top: 20px;"><?php echo $row['isi']?></p>
                     </div>
-                    <input type="submit" value="Buat kelas" class="inter-600 submit-kelas">
-                </form>
+                    <hr>
+                    <?php
+                }
+                ?>
             </div>
-        </div>
+        </div>  
     </main>
     <script src="../../assets/javascript/scripts.js"></script>
 </body>

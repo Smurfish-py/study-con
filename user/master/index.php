@@ -115,7 +115,7 @@ if (!isset($_SESSION['id'])) {
                             <h3>Pengumuman</h3>
                             <div>
                                 <i class="fa-solid fa-pen-to-square fa-lg" style="margin-top: 20px;" id="icon-buat-pengumuman"></i>
-                                <a href=""><i class="fa-solid fa-book fa-lg"></i></a>
+                                <a href="list_pengumuman.php"><i class="fa-solid fa-book fa-lg"></i></a>
                             </div>
                         </div>
                         <hr>
