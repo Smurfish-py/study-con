@@ -7,7 +7,7 @@ Ini merupakan web pembelajaran berbasis Native `PHP`, `MySQL (MariaDB)` yang dik
 ## Keterangan Project
 - **Project name :** StudyCon | Study and Connect
 - **Pengembang :** Muhamad Rifqi Kurniawan
-- **Bahasa Pengembangan :** Native `PHP`, `HTML` + `CSS`, `Javascript`
+- **Tech Stack :** Native `PHP`, `HTML` + `CSS`, `Javascript`, `XAMPP` (Pengujian secara lokal)
 - **Platform :** Desktop (Under development), Mobile (Planned)
 - **Database :** `MySQL (MariaDB)`
 - **Hosted on :** [Infinityfree.com](infinityfree.com)
