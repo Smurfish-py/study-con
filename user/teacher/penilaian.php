@@ -87,7 +87,7 @@ if (!isset($_SESSION['id'])) {
                 ?>
                 <div class="tugas-komentar-section-body-header">
                     <h2 class="inter-600" style="margin: 0;"><?php echo $row['judul']?><br><span class="inter-400 font-size-l">Halaman penilaian dan komentar tugas</span></h2>
-                    <a href="kelas.php?id=<?php echo $id_kelas?>" class="inter-500 font-size-l" style="color: black; text-decoration: none;padding-right: 10px;">Kembali ke halaman kelas</a>
+                    <a href="kelas.php?id=<?php echo $id_kelas?>" class="inter-500 font-size-l" style="color: black; text-decoration: none;padding-right: 10px;"><u>Kembali ke halaman kelas</u></a>
                 </div>
                 <hr style="margin: 0;">
                 <div class="tugas-penilaian-section-body">

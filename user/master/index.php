@@ -125,14 +125,13 @@ if (!isset($_SESSION['id'])) {
                             $hasil = $pdo->query($query);
                             if ($hasil->rowCount() > 0) {
                                 while ($row = $hasil->fetch(PDO::FETCH_ASSOC)){
-                                    echo "<p style='margin: 0;'><span style='color: #009DFF;'>[".$row['penulis'].", ".$row['waktu']."]</span> ".$row['isi']."</p>";
+                                    echo "<p style='margin: 0;'><span style='color: #009DFF;'>[".$row['penulis'].", ".$row['waktu']."]</span> ".$row['isi']."</p><br>";
                                 }    
                             } else {
                                 echo "Belum ada pengumuman :D";
                             }
                             ?>
                         </div>
-                        
                     </div>
                 </div>
             </div>
@@ -162,5 +161,17 @@ if (!isset($_SESSION['id'])) {
         </div>
     </main>
     <script src="../../assets/javascript/scripts.js"></script>
+    <script>
+        const iconPengumuman = document.getElementById('icon-buat-pengumuman');
+        const buatPengumuman = document.getElementById('buat-pengumuman');
+        iconPengumuman.addEventListener('click', function(){
+            if (buatPengumuman.style.display === 'none') buatPengumuman.style.display = 'flex';
+        });
+
+        const batalBuatPengumuman = document.getElementById('batal-buat-pengumuman');
+        batalBuatPengumuman.addEventListener('click', function(){
+            if (buatPengumuman.style.display === 'flex') buatPengumuman.style.display = 'none';
+        });
+    </script>
 </body>
 </html>

@@ -35,7 +35,7 @@ if (isset($_GET['action'])) {
     $deskripsi = $_POST['masukan-pribadi'];
     $nilai = $_POST['nilai-murid'];
     
-    if ($nilai != '' && $deskripsi != '') {
+    if ($nilai != '' || $deskripsi != '') {
         $status = 'dinilai';
     } else {
         $status = 'diserahkan';

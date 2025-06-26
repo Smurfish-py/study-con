@@ -183,6 +183,10 @@ body {
     margin: 0;
 }
 
+.edit-pengumuman-button:hover{
+    cursor: pointer;
+}
+
 .list-pengumuman-header-title {
     display: flex;
     align-items: center;

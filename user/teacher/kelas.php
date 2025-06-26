@@ -177,11 +177,11 @@ if (!isset($_SESSION['id'])) {
                                 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                                     echo "<div class='inter-400 anggota-kelas'>";
                                     if ($row['foto_profil'] == '') {
-                                        echo "<span style='font-size: 50px;'><i class='fa-solid fa-circle-user'></i></span>";
+                                        echo "<span style='font-size: 40px;'><i class='fa-solid fa-circle-user'></i></span>";
                                     } else {
-                                        echo "<img src='../../assets/images/user/".$row['foto_profil']."' alt='Foto Profil User' style='height: 50px; width: 50px; object-fit: cover; border-radius: 100px;'>";;
+                                        echo "<img src='../../assets/images/user/".$row['foto_profil']."' alt='Foto Profil User' style='height: 40px; width: 40px; object-fit: cover; border-radius: 100px;'>";;
                                     }
-                                    echo "<h2 class='inter-400 font-size-xl'>".$row['username']."<br><span class='font-size-l'>".$row['email']."</span><h2>";
+                                    echo "<h2 class='inter-400 font-size-xl'>".$row['username']."<br><span class='font-size-l'>".$row['email']."</span></h2>";
                                     echo "</div>";
                                     echo "<hr style='margin: 0;'>";
                                 }  

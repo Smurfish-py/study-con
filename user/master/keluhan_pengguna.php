@@ -79,7 +79,7 @@ if (!isset($_SESSION['id'])) {
                     <h2 class="inter-600">Kotak Masuk<br><span class="inter-500 font-size-l" style="color: orange;">(Semua keluhan, laporan, dan masukan dikumpulkan disini)</span></h2>
                     <a href="index.php" class="inter-400 font-size-l" style="text-decoration: none; color: #009DFF;">Kembali ke dashboard</a>
                 </div>
-                <hr>
+                <hr style="margin: 0 20px;">
             </div>
             <div class="masukan-pengguna-body">
                 <?php
@@ -89,7 +89,7 @@ if (!isset($_SESSION['id'])) {
                 if ($stmt->rowCount()>0) {
                     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                         ?>
-                            <div style="border: 1px solid rgba(0, 0, 0, 0.3);">
+                            <div style="border: 1px solid rgba(0, 0, 0, 0.3); margin: 0 20px 5px 20px;">
                                 <h3 class="inter-600" style="margin: 10px 20px 0 20px;">Pengirim : <span class="inter-400"><?php echo $row['pengirim']?></span><br>Tipe : <?php
                                 if ($row['tipe'] == 'pesan') {
                                     echo "<span style='color: orange;'>Pesan</span>";

@@ -135,7 +135,7 @@ if (!isset($_SESSION['id'])) {
                     <hr>
                     <div style="overflow-y: auto; height: fit-content; margin: 10px 50px 30px 50px;">
                         <?php
-                        $stmt = $pdo->prepare("SELECT * FROM kelas WHERE id_guru=:id_guru");
+                        $stmt = $pdo->prepare("SELECT * FROM kelas WHERE id_guru=:id_guru ORDER BY nama_kelas DESC");
                         $stmt->execute(['id_guru'=>$_SESSION['id']]);
                         $path = "../../assets/images/kelas/";
                         if ($stmt->rowCount()>0) {

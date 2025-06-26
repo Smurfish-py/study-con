@@ -163,14 +163,18 @@ if (!isset($_SESSION['id'])) {
                         if ($row['tipe'] == 'materi') {
 
                         } else if ($row['tipe'] == 'tugas') {
-                            if ($nilai_row['status'] == '') {
+                            if ($nilai_row) {
+                                if ($nilai_row['status'] == '') {
+                                    echo "<p class='inter-400'><b>Status :</b> <span style='color: red;'>Belum dikerjakan</span></p>";
+                                } else if ($nilai_row['status'] == 'diserahkan') {
+                                    echo "<p class='inter-400'><b>Status :</b> <span style='color: orange;'>Menunggu penilaian</span></p>";
+                                } else if ($nilai_row['status'] == 'dinilai') {
+                                    echo "<p class='inter-600'><b>Nilai anda :</b> <span style='color: Green;'>".$nilai_row['nilai']."/100</span></p>";
+                                    echo "<hr>";
+                                }
+                            } else {
                                 echo "<p class='inter-400'><b>Status :</b> <span style='color: red;'>Belum dikerjakan</span></p>";
-                            } else if ($nilai_row['status'] == 'diserahkan') {
-                                echo "<p class='inter-400'><b>Status :</b> <span style='color: orange;'>Menunggu penilaian</span></p>";
-                            } else if ($nilai_row['status'] == 'dinilai') {
-                                echo "<p class='inter-600'><b>Nilai anda :</b> <span style='color: Green;'>".$nilai_row['nilai']."/100</span></p>";
-                                echo "<hr>";
-                            }
+                        }
                         }
                         ?>
                         <p class="inter-400"><?php echo $row['deskripsi']?></p>
@@ -191,17 +195,21 @@ if (!isset($_SESSION['id'])) {
                             ?>
                         </div>
                         <?php 
-                        if ($nilai_row['status'] == 'diserahkan' || $nilai_row['status'] == 'dinilai') {
-                            ?>
-                            <br>
-                            <h2 class="inter-700 font-size-l">Lampiran anda : </h2>
-                            <?php
-                            $stmt1 = $pdo->prepare("SELECT * FROM nilai_murid JOIN murid_tugas ON murid_tugas.id_file = nilai_murid.id_file WHERE id_murid = :id");
-                            $stmt1->execute([':id'=>$_SESSION['id']]);
-                            while ($row1 = $stmt1->fetch(PDO::FETCH_ASSOC)) {
-                                $parts = explode("_", $row1['nama_file']);
-                                echo "<a href='../../assets/documents/user/".$row1['nama_file']."' class='inter-400'>-> ".$parts[2]."</a><br>";
+                        if ($nilai_row) {
+                            if ($nilai_row['status'] == 'diserahkan' || $nilai_row['status'] == 'dinilai') {
+                                ?>
+                                <br>
+                                <h2 class="inter-700 font-size-l">Lampiran anda : </h2>
+                                <?php
+                                $stmt1 = $pdo->prepare("SELECT * FROM nilai_murid JOIN murid_tugas ON murid_tugas.id_file = nilai_murid.id_file WHERE id_murid = :id AND nilai_murid.id_tugas =".$_GET['id']);
+                                $stmt1->execute([':id'=>$_SESSION['id']]);
+                                while ($row1 = $stmt1->fetch(PDO::FETCH_ASSOC)) {
+                                    $parts = explode("_", $row1['nama_file']);
+                                    echo "<a href='../../assets/documents/user/".$row1['nama_file']."' class='inter-400'>-> ".$parts[2]."</a><br>";
+                                }
                             }
+                        } else {
+                            
                         }
                         ?>
                     </div>

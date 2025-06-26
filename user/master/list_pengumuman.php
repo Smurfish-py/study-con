@@ -83,12 +83,13 @@ if (!isset($_SESSION['id'])) {
                 <?php
                 $stmt = $pdo->prepare("SELECT * FROM pengumuman ORDER BY waktu DESC");
                 $stmt->execute();
-
+                
                 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                     ?>
-                    <div class="pengumuman-isi">
+                    <div class="pengumuman-isi" id="pengumuman-isi">
                         <p class="inter-400"><b>Penulis: </b><?php echo $row['penulis']?></p>
                         <p class="inter-400"><b>Waktu dibuat : </b><?php echo $row['waktu']?></p>
+                        <p class="inter-400"><b>ID : </b><?php echo $row['id']?></p>
                         <p class="inter-400" style="margin-top: 20px;"><?php echo $row['isi']?></p>
                     </div>
                     <hr>
